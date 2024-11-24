@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace = "nyamnyam.mapper.MemberMapper">
+<insert id = "memberInsert" parameterType = "member">
+insert into (member_num, member_id, member_pw, member_name, member_gender, member_birth_date, member_regist_date
+			, member_addr, member_addr_detail, member_post)
+ values(#{memberNum}, #{memberId}, #{memberPw}, #{memberName}, #{memberGender}, #{memberBirthDate}, sysdate
+ , #{memberAddr}, #{memberAddrDetail}, #{memberPost})
+</insert>
+</mapper>

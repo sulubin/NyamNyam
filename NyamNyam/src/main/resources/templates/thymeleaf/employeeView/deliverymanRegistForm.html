@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>기사 등록 페이지</title>
+</head>
+<body>
+기사님 등록 페이지입니다.<br/>
+<form action = "deliverymanRegist" method = "post">
+기사 번호 : <input type = "text" name = "deliverymanNum" th:value = "${autoNum}" readonly = "readonly"/> <br/>
+아이디 : <input type = "text" name = "deliverymanId"/> <br/>
+비밀번호 : <input type = "password" name = "deliverymanPw"/> <br/>
+성함 : <input type = "text" name = "deliverymanName"/> <br/>
+전화번호 : <input type = "tel" name = "deliverymanPhone"/> <br/>
+이메일 : <input type = "email" name = "deliverymanEmail"/> <br/>
+<input type = "submit" value = "등록"/>
+</form>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>가게 관리 페이지</title>
+<script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script type = "text/javascript">
+$(function(){
+	$("#menuRegist").click(function(){
+		popupWindow = window.open("/orner/menuRegist", "메뉴 추가", "width=600, height=800, left=500, top=100");
+		popupWindow.onbeforeunload = function(){
+			window.location.reload();
+		}
+	})
+})
+
+</script>
+</head>
+<body>
+가게 관리 페이지입니다.<br/><br/>
+<span id = "menuRegist">메뉴 추가</span><br/>
+<table border = "1">
+	<tr height = "200"><td width = "200">메뉴 이미지</td>
+	<td width = "600">
+		메뉴명 : <br/>
+		가격 : <br/>
+		설명 : 
+	</td></tr>
+</table>
+
+메뉴 수정
+메뉴 삭제
+</body>
+</html>

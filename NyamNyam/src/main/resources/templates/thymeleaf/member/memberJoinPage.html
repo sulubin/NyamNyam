@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+<script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script type = "text/javascript">
+$(function(){
+	termCheckPage();
+	
+})
+function termCheckPage(){
+	$.ajax({
+		type : "post",
+		url : "/member/memberTermCheck",
+		dataType : "html",
+		success : function(result){
+			$("#content").html(result)
+		},
+		error : function(){
+			alert("오류");
+		}
+	});
+}
+function memberJoinPage(){
+	var checked = $("#chbx").is(":checked");
+	if(checked){
+		$.ajax({
+			type : "post",
+			url : "/member/memberJoinForm",
+			dataType : "html",
+			success : function(result){
+				$("#content").html(result);
+			},
+			error : function(){
+				alert("오류");
+			}
+		});
+	}
+	else{
+		alert("약관에 동의하여 주세요.");
+		return false;
+		
+	}
+}
+</script>
+</head>
+<body>
+<div id = "content"></div>
+</body>
+</html>

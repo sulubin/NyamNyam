@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.6</version>
+		<version>3.2.10</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.nyamnyam</groupId>
@@ -35,27 +35,61 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- Thymeleaf-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- DB -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc11</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- Lombok-->
+		<dependency>
+      	   <groupId>org.projectlombok</groupId>
+      	   <artifactId>lombok</artifactId>
+      	   <optional>true</optional>
+     	 </dependency>
+		<!-- Thymeleaf -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+		<!-- Mybatis -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-websocket</artifactId>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>3.0.3</version>
 		</dependency>
-		<!-- Lombok -->
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter-test</artifactId>
+			<version>3.0.3</version>
+			<scope>test</scope>
 		</dependency>
 		<!-- 서버 재시작 없이 바로 적용하기  spring boot auto restart -->
-      <dependency>
-         <groupId>org.springframework.boot</groupId>
-         <artifactId>spring-boot-devtools</artifactId>
-      </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+		<!-- Log4j2 -->
+		<dependency>
+			<groupId>org.bgee.log4jdbc-log4j2</groupId>
+			<artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+			<version>1.16</version>
+		</dependency>	
 	</dependencies>
+	
 
 	<build>
 		<plugins>

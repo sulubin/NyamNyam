@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace = "nyamnyam.mapper.EmployeeMapper">
+<insert id = "insertOrner" parameterType = "nyamnyam.domain.OrnerDTO">
+insert into orners (orner_num, orner_id, orner_pw, orner_name, orner_phone, orner_email) 
+values (#{ornerNum}, #{ornerId}, #{ornerPw}, #{ornerName}, #{ornerPhone}, #{ornerEmail})
+</insert>
+
+</mapper>

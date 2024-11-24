@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+사장님 등록 페이지입니다.<br/>
+
+<form action = "ornerRegist" method = "post">
+사장 번호 : <input type = "text" name = "ornerNum" th:value = "${autoNum}" readonly = "readonly"/> <br/>
+아이디 : <input type = "text" name = "ornerId"/> <br/>
+비밀번호 : <input type = "password" name = "ornerPw"/> <br/>
+성함 : <input type = "text" name = "ornerName"/> <br/>
+전화번호 : <input type = "tel" name = "ornerPhone"/> <br/>
+이메일 : <input type = "email" name = "ornerEmail"/> <br/>
+<input type = "submit" value = "등록"/>
+</form>
+</body>
+</html>

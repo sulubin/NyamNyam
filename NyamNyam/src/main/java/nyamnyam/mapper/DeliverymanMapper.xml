@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace = "nyamnyam.mapper.DeliverymanMapper">
+<insert id = "deliverymanInserst" parameterType = "nyamnyam.domain.DeliverymanDTO">
+insert into deliverymans (deliveryman_num, deliveryman_id, deliveryman_pw, deliveryman_name, deliveryman_phone, deliveryman_email) 
+values (#{deliverymanNum}, #{deliverymanId}, #{deliverymanPw}, #{deliverymanName}, #{deliverymanPhone}, #{deliverymanEmail})
+</insert>
+</mapper>
