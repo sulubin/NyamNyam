@@ -2,8 +2,7 @@ package nyamnyam.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import nyamnyam.domain.OrnerDTO;
-
 @Mapper
-public interface EmployeeMapper {
+public interface LoginMapper {
+	public void loginSelectOne();	
 }

@@ -5,5 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 import nyamnyam.domain.OrnerDTO;
 
 @Mapper
-public interface EmployeeMapper {
+public interface OrnerMapper {
+	public void ornerInsert(OrnerDTO dto);
 }

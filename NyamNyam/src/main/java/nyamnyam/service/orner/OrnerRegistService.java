@@ -5,12 +5,12 @@ import org.springframework.stereotype.Service;
 
 import nyamnyam.command.OrnerCommand;
 import nyamnyam.domain.OrnerDTO;
-import nyamnyam.mapper.EmployeeMapper;
+import nyamnyam.mapper.OrnerMapper;
 
 @Service
 public class OrnerRegistService {
 	@Autowired
-	EmployeeMapper employeeMapper;
+	OrnerMapper ornerMapper;
 	public void execute(OrnerCommand ornerCommand) {
 		OrnerDTO dto = new OrnerDTO();
 		dto.setOrnerNum(ornerCommand.getOrnerNum());
@@ -19,6 +19,6 @@ public class OrnerRegistService {
 		dto.setOrnerName(ornerCommand.getOrnerName());
 		dto.setOrnerPhone(ornerCommand.getOrnerPhone());
 		dto.setOrnerEmail(ornerCommand.getOrnerEmail());
-		employeeMapper.insertOrner(dto);
+		ornerMapper.ornerInsert(dto);
 	}
 }

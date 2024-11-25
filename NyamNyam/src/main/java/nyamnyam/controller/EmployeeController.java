@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import nyamnyam.command.DeliverymanCommand;
 import nyamnyam.command.OrnerCommand;
+import nyamnyam.command.StoreCommand;
 import nyamnyam.service.AutoNumService;
 import nyamnyam.service.deliveryman.DeliverymanRegistService;
 import nyamnyam.service.orner.OrnerRegistService;
+import nyamnyam.service.store.StoreRegistService;
 
 @Controller
 @RequestMapping("employee")
@@ -21,12 +23,16 @@ public class EmployeeController {
 	@Autowired
 	OrnerRegistService ornerRegistService;
 	@Autowired
+	StoreRegistService storeRegistService;
+	@Autowired
 	DeliverymanRegistService deliverymanRegistService;
 	
+	// 직원 메인 페이지
 	@RequestMapping("employeeMain")
 	public String employeeMain() {
 		return "thymeleaf/employeeView/employeeMainPage";
 	}
+	// 사장 등록 페이지
 	@GetMapping("ornerRegist")
 	public String ornerRegist(Model model) {
 		String tableName = "orners";
@@ -35,9 +41,11 @@ public class EmployeeController {
 		autoNumService.execute(tableName, columnName, sep, model);
 		return "thymeleaf/employeeView/ornerRegistForm";
 	}
+	// 사장 및 가게 등록 
 	@PostMapping("ornerRegist")
-	public String ornerRegist(OrnerCommand ornerCommand) {
+	public String ornerRegist(OrnerCommand ornerCommand, StoreCommand storeCommand) {
 		ornerRegistService.execute(ornerCommand);
+		storeRegistService.execute(storeCommand);
 		return "redirect:/employee/employeeMain";
 	}
 	@GetMapping("deliverymanRegist")

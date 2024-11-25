@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace = "nyamnyam.mapper.StoreMapper">
+<resultMap type = "storeInfo" id = "storeInfoResultMap">
+	<association property= "storeDTO" javaType = "nyamnyam.domain.StoreDTO">
+		<id column = "store_num" jdbcType = "VARCHAR" property = "storeNum"></id>
+		<result column = "store_name" jdbcType = "VARCHAR" property = "storeName"></result>
+		<result column = "store_type" jdbcType = "VARCHAR" property = "storeType"></result>
+		<result column = "store_addr" jdbcType = "VARCHAR" property = "storeAddr"></result>
+		<result column = "store_addr_detail" jdbcType = "VARCHAR" property = "storeAddrDetail"></result>
+		<result column = "store_phone" jdbcType = "VARCHAR" property = "storePhone"></result>
+		<result column = "store_open_time" jdbcType = "VARCHAR" property = "storeOpenTime"></result>
+		<result column = "store_introduction" jdbcType = "VARCHAR" property = "storeIntroduction"></result>
+		<result column = "store_banner_image" jdbcType = "VARCHAR" property = "storeBannerImage"></result>
+		<result column = "store_banner_store_image" jdbcType = "VARCHAR" property = "storeBannerStoreImage"></result>
+		<result column = "store_profile_image" jdbcType = "VARCHAR" property = "storeProfileImage"></result>
+		<result column = "store_profile_store_image" jdbcType = "VARCHAR" property = "storeProfileStoreImage"></result>
+	</association>
+	<association property = "menuDTO" javaType = "menu">
+		<id column = "menu_num" jdbcType = "VARCHAR" property = "menuNum" />
+		<result column = "menu_name" jdbcType = "VARCHAR" property = "menuName" />
+		<result column = "menu_price" jdbcType = "BIGINT" property = "menuPrice" />
+		<result column = "menu_kind" jdbcType = "VARCHAR" property = "menuKind" />
+		<result column = "menu_introduction" jdbcType = "VARCHAR" property = "menuIntroduction" />
+		<result column = "menu_image" jdbcType = "VARCHAR" property = "menuImage" />
+		<result column = "menu_store_image" jdbcType = "VARCHAR" property = "menuStoreImage" />
+		<result column = "menu_origin" jdbcType = "VARCHAR" property = "menuOrigin" />
+ 	</association>
+	<association property = "ornerDTO" javaType = "orner">
+		<id column = "orner_num" jdbcType = "VARCHAR" property = "ornerNum" />
+		<result column = "orner_id" jdbcType = "VARCHAR" property = "ornerId" />
+		<result column = "orner_pw" jdbcType = "VARCHAR" property = "ornerPw" />
+		<result column = "orner_name" jdbcType = "VARCHAR" property = "ornerName" />
+		<result column = "orner_email" jdbcType = "VARCHAR" property = "ornerEmail" />
+		<result column = "orner_phone" jdbcType = "VARCHAR" property = "ornerPhone" />
+	</association>
+</resultMap>
+
+
+
+
+<insert id = "storeInsert" parameterType = "store">
+insert into stores (store_num, store_name, orner_num, store_type, store_addr, store_addr_detail, store_phone, store_open_time, store_introduction)
+ values (#{storeNum}, #{storeName}, #{ornerNum}, #{storeType}, #{storeAddr}, #{storeAddrDetail}, null, null, null)
+</insert>
+
+<select id = "selectStoreNum" parameterType = "string" resultType = "string">
+select store_num from stores where orner_num = #{ornerNum}
+</select>
+
+<select id = "selectStoreInfoList" parameterType = "string" resultMap = "storeInfoResultMap">
+select store_name, store_introduction
+	 , menu_name, menu_price, menu_kind, menu_introduction, menu_origin, menu_image, menu_store_image
+	 , orner_name
+ from stores s left outer join menu m 
+ on s.store_num = m.store_num join orners o
+ on s.orner_num = o.orner_num
+
+
+ where s.store_num = #{storeNum}
+</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
