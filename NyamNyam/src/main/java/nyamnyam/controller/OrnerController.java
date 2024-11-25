@@ -33,37 +33,18 @@ public class OrnerController {
 		LoginDTO auth = (LoginDTO)session.getAttribute("auth");
 		String ornerNum = auth.getUserNum();
 		String storeNum = storeMapper.selectStoreNum(ornerNum);
-		System.out.println(ornerNum);
-		System.out.println(storeNum);
 		// model로 뿌리기
 		StoreInfoDTO storeInfoDTO = storeMapper.selectStoreInfoList(storeNum);  
 		model.addAttribute("storeInfoDTO", storeInfoDTO);
 		return "thymeleaf/OrnerView/ornerMainPage";
 	}
 	@PostMapping("storeManage")
-	public String storeManage(@RequestParam("ornerNum") String ornerNum) {
+	public String storeManage(@RequestParam("ornerNum") String ornerNum, HttpSession session, Model model) {
+		String storeNum = storeMapper.selectStoreNum(ornerNum);
+		// model로 뿌리기
+		StoreInfoDTO storeInfoDTO = storeMapper.selectStoreInfoList(storeNum);  
+		model.addAttribute("storeInfoDTO", storeInfoDTO);
 		return "thymeleaf/ornerView/storeManagePage";
 	}
-	@GetMapping("menuRegist")
-	public String menuAdd() {
-		return "thymeleaf/ornerView/menuForm";
-	}
-	@PostMapping("menuRegist")
-	public void menuRegist(MenuCommand menuCommand, HttpServletResponse response) {
-		menuRegistService.execute(menuCommand);
-		
-		response.setContentType("text/html; charset=utf-8");
-		PrintWriter out;
-		try {
-			out = response.getWriter();
-			String str = "<script>";
-				  str += "	window.self.close()";
-				  str += "</script>";
-			out.print(str);
-			out.close();
-			System.out.println("창이 닫혔어요");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	
 }

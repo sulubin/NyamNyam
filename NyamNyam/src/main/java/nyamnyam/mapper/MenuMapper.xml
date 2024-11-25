@@ -4,7 +4,7 @@
         
 <mapper namespace = "nyamnyam.mapper.MenuMapper">
 <insert id = "menuInsert" parameterType = "nyamnyam.domain.MenuDTO">
-insert into menus (menu_num, menu_name, menu_price, menu_content, menu_origin)	
-values (#{menuNum}, #{menuName}, #{menuPrice}, #{menuContent}, #{menuOrigin})
+insert into menu (menu_num, menu_name, menu_price, menu_content, menu_origin, menu_kind, menu_image, menu_store_image)	
+values (#{menuNum}, #{menuName}, #{menuPrice}, #{menuContent}, #{menuOrigin}, #{menuKind}, #{menuImage}, #{menuStoreImage})
 </insert>
 </mapper>
