@@ -24,6 +24,10 @@ public class LoginController {
 	@Autowired
 	LoginService loginService;
 	
+	@GetMapping("login")
+	public String login() {
+		return "thymeleaf/login/loginPage";
+	}
 	@PostMapping("login")
 	public String login(LoginCommand loginCommand, HttpSession session, Model model) {
 		// 로그인하기

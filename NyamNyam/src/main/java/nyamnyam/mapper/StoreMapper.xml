@@ -18,16 +18,6 @@
 		<result column = "store_profile_image" jdbcType = "VARCHAR" property = "storeProfileImage"></result>
 		<result column = "store_profile_store_image" jdbcType = "VARCHAR" property = "storeProfileStoreImage"></result>
 	</association>
-	<association property = "menuDTO" javaType = "menu">
-		<id column = "menu_num" jdbcType = "VARCHAR" property = "menuNum" />
-		<result column = "menu_name" jdbcType = "VARCHAR" property = "menuName" />
-		<result column = "menu_price" jdbcType = "BIGINT" property = "menuPrice" />
-		<result column = "menu_kind" jdbcType = "VARCHAR" property = "menuKind" />
-		<result column = "menu_introduction" jdbcType = "VARCHAR" property = "menuIntroduction" />
-		<result column = "menu_image" jdbcType = "VARCHAR" property = "menuImage" />
-		<result column = "menu_store_image" jdbcType = "VARCHAR" property = "menuStoreImage" />
-		<result column = "menu_origin" jdbcType = "VARCHAR" property = "menuOrigin" />
- 	</association>
 	<association property = "ornerDTO" javaType = "orner">
 		<id column = "orner_num" jdbcType = "VARCHAR" property = "ornerNum" />
 		<result column = "orner_id" jdbcType = "VARCHAR" property = "ornerId" />
@@ -37,7 +27,10 @@
 		<result column = "orner_phone" jdbcType = "VARCHAR" property = "ornerPhone" />
 	</association>
 </resultMap>
-
+<sql id = "storeBaseColumn">
+store_num, store_name, orner_num, store_type, store_addr, store_addr_detail, store_phone, store_open_time, store_introduction,
+store_banner_image, store_banner_store_image, store_profile_image, store_profile_store_image
+</sql>
 
 
 
@@ -50,15 +43,15 @@ insert into stores (store_num, store_name, orner_num, store_type, store_addr, st
 select store_num from stores where orner_num = #{ornerNum}
 </select>
 
+<select id = "storeSelectAll" resultType = "store">
+select store_num as storeNum, store_name as storeName from stores
+</select>
+
 <select id = "selectStoreInfoList" parameterType = "string" resultMap = "storeInfoResultMap">
-select store_name, store_introduction
-	 , menu_name, menu_price, menu_kind, menu_introduction, menu_origin, menu_image, menu_store_image
-	 , orner_name
- from stores s left outer join menu m 
- on s.store_num = m.store_num join orners o
- on s.orner_num = o.orner_num
-
-
+select store_num, store_name, store_introduction
+	 , o.orner_num, orner_name
+ from stores s join orners o 
+ on s.orner_num = o.orner_num 
  where s.store_num = #{storeNum}
 </select>
 </mapper>

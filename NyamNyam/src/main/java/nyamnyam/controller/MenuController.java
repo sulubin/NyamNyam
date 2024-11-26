@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import nyamnyam.command.MenuCommand;
 import nyamnyam.service.menu.MenuRegistService;
 
@@ -25,9 +26,8 @@ public class MenuController {
 		return "thymeleaf/ornerView/menuForm";
 	}
 	@PostMapping("menuRegist")
-	public void menuRegist(@Validated MenuCommand menuCommand, HttpServletResponse response) {
-		System.out.println("서비스마저 못가는중");
-		menuRegistService.execute(menuCommand);
+	public void menuRegist(@Validated MenuCommand menuCommand, HttpServletResponse response, HttpSession session) {
+		menuRegistService.execute(menuCommand, session);
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out;
 		try {
@@ -37,7 +37,6 @@ public class MenuController {
 				  str += "</script>";
 			out.print(str);
 			out.close();
-			System.out.println("창이 닫혔어요");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

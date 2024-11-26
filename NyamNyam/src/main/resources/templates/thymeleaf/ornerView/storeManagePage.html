@@ -25,15 +25,15 @@ $(function(){
 가게 설명<br/>
 <span id = "menuRegist">메뉴 추가</span><br/>
 <table border = "1">
-	<tr height = "200"><td width = "200">메뉴 이미지</td>
+	<tr th:each = "dto:${menuList}" height = "200"><td width = "200">메뉴 이미지</td>
 	<td width = "600">
-		메뉴명 : <br/>
-		가격 : <br/>
-		설명 : 
+		메뉴명 : [[${dto.menuName}]]<br/>
+		가격 : [[${dto.menuPrice}]]<br/>
+		설명 : [[${dto.menuIntroduction}]]<br/>
+		<div align = "right">메뉴 수정 | 메뉴 삭제</div>
 	</td></tr>
 </table>
 
-메뉴 수정
-메뉴 삭제
+
 </body>
 </html>

@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.servlet.http.HttpSession;
 import nyamnyam.command.MenuCommand;
+import nyamnyam.domain.LoginDTO;
 import nyamnyam.domain.MenuDTO;
 import nyamnyam.mapper.MainMapper;
 import nyamnyam.mapper.MenuMapper;
+import nyamnyam.mapper.StoreMapper;
 
 @Service
 public class MenuRegistService {
@@ -20,7 +23,9 @@ public class MenuRegistService {
 	MenuMapper menuMapper;
 	@Autowired
 	MainMapper mainMapper;
-	public void execute(MenuCommand menuCommand) {
+	@Autowired
+	StoreMapper storeMapper;
+	public void execute(MenuCommand menuCommand, HttpSession session) {
 		MenuDTO dto = new MenuDTO();
 		String autoNum = mainMapper.selectAutoNum("menu", "menu_num", "menu_");
 		dto.setMenuNum(autoNum);
@@ -31,8 +36,7 @@ public class MenuRegistService {
 		dto.setMenuKind(menuCommand.getMenuKind());
 		// 1) 파일 추가
 		// 경로
-		URL resource = getClass().getClassLoader().getResource("/static/upload");
-		System.out.println("resource : " + resource);
+		URL resource = getClass().getClassLoader().getResource("static/upload");
 		String fileDir = resource.getFile();
 		// String fileDir = "D:NyamNyam/target/classes/static/upload";
 		// 2) 파일 관련 내용
@@ -52,8 +56,9 @@ public class MenuRegistService {
 		  catch (IOException e) {e.printStackTrace();}
 		dto.setMenuImage(originalFile);
 		dto.setMenuStoreImage(storeFileName);
-		System.out.println(resource.getFile());
-		System.out.println(file);
+		LoginDTO auth = (LoginDTO)session.getAttribute("auth");
+		String storeNum = storeMapper.selectStoreNum(auth.getUserNum());
+		dto.setStoreNum(storeNum);
 		menuMapper.menuInsert(dto);
 	}
 }

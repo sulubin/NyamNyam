@@ -3,8 +3,26 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
 <mapper namespace = "nyamnyam.mapper.MenuMapper">
+<resultMap type = "menu" id = "menuResultMap">
+	<constructor>
+		<idArg column = "menu_num" javaType = "string"/>
+		<arg column = "menu_name" javaType = "string"/>
+		<arg column = "menu_price" javaType = "integer"/>
+		<arg column = "menu_kind" javaType = "string"/>
+		<arg column = "menu_introduction" javaType = "string"/>
+		<arg column = "menu_image" javaType = "string"/>
+		<arg column = "menu_store_image" javaType = "string"/>
+		<arg column = "menu_origin" javaType = "string"/>
+		<arg column = "store_num" javaType = "string"/>
+	</constructor>
+</resultMap>
 <insert id = "menuInsert" parameterType = "nyamnyam.domain.MenuDTO">
-insert into menu (menu_num, menu_name, menu_price, menu_content, menu_origin, menu_kind, menu_image, menu_store_image)	
-values (#{menuNum}, #{menuName}, #{menuPrice}, #{menuContent}, #{menuOrigin}, #{menuKind}, #{menuImage}, #{menuStoreImage})
+insert into menu (menu_num, menu_name, menu_price, menu_introduction, menu_origin, menu_kind, menu_image, menu_store_image, store_num)	
+values (#{menuNum}, #{menuName}, #{menuPrice}, #{menuIntroduction}, #{menuOrigin}, #{menuKind}, #{menuImage}, #{menuStoreImage}, #{storeNum})
 </insert>
+
+<select id = "selectMenuList" parameterType = "string" resultMap = "menuResultMap">
+select menu_num, menu_name, menu_price, menu_kind, menu_introduction, menu_image, menu_store_image, menu_origin, store_num
+ from menu where store_num = #{store_num}
+</select>
 </mapper>
