@@ -32,7 +32,8 @@ public class MemberController {
 	// 회원가입 서비스
 	@PostMapping("memberJoin")
 	public String memberJoin(MemberCommand memberCommand) {
+		System.out.println("커맨드 전달 성공");
 		memberJoinService.execute(memberCommand);
-		return "thymeleaf/memberView/index";
+		return "redirect:/";
 	}
 }

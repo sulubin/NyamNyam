@@ -37,8 +37,8 @@ public class StoreController {
 		return "thymeleaf/ornerView/storeManagePage";
 	}
 	
-	@GetMapping("storeDetailPage")
+	/*@GetMapping("storeDetailPage")
 	public String storeDetailPage() {
 		
-	}
+	}*/
 }

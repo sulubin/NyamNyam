@@ -26,6 +26,7 @@ public class MemberJoinService {
 		dto.setMemberAddr(memberCommand.getMemberAddr());
 		dto.setMemberAddrDetail(memberCommand.getMemberAddrDetail());
 		dto.setMemberPost(memberCommand.getMemberPost());
+		System.out.println("mapper로 전달 성공");
 		memberMapper.memberInsert(dto);
 	}
 }

@@ -36,7 +36,7 @@ public class LoginController {
 		LoginDTO dto = mainMapper.selectUserInfo(loginCommand.getUserId());
 		// if문을 통해 userNum과 관련된 페이지를 return 하기	
 		String grade = dto.getGrade();
-		if(grade.equals("member")) return "thymeleaf/memberView/memberMainPage";
+		if(grade.equals("member")) return "redirect:/";
 		else if(grade.equals("employee")) return "redirect:/employee/employeeMain";//"thymeleaf/employeeView/employeeMainPage";
 		else if(grade.equals("orner")) {
 			return "redirect:/orner/ornerMain";
