@@ -8,7 +8,7 @@ select concat(#{sep}, nvl(substr(max(${columnName}), length(#{sep}) + 1), 100000
 </select>
 <select id = "selectUserInfo" parameterType = "string" resultType = "login">
 
-select member_num as userNum, member_pw as userPw, 'member' as grade from members where member_id = #{userId}
+select member_num as userNum, member_pw as userPw, 'member' as grade from member where member_id = #{userId}
  union select employee_num, employee_pw, 'employee' from employees where employee_id = #{userId}
  union select orner_num, orner_pw, 'orner' from orners where orner_id = #{userId}
  union select deliveryman_num, deliveryman_pw, 'deliveryman' from deliverymans where deliveryman_id = #{userId}

@@ -32,6 +32,7 @@ public class LoginController {
 	public String login(LoginCommand loginCommand, HttpSession session, Model model) {
 		// 로그인하기
 		loginService.execute(loginCommand, session);
+		System.out.println("로그인 성공");
 		// loginCommand에 입력된 값으로 user정보 가져오기
 		LoginDTO dto = mainMapper.selectUserInfo(loginCommand.getUserId());
 		// if문을 통해 userNum과 관련된 페이지를 return 하기	

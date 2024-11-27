@@ -13,4 +13,5 @@ public interface StoreMapper {
 	public String selectStoreNum(String ornerNum);
 	public List<StoreDTO> storeSelectAll();
 	public StoreInfoDTO selectStoreInfoList(String storeNum);
+	//public void changeStoreImage()
 }

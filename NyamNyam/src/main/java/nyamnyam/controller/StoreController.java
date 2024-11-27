@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
+import nyamnyam.command.StoreCommand;
+import nyamnyam.domain.LoginDTO;
 import nyamnyam.domain.MenuDTO;
 import nyamnyam.domain.StoreInfoDTO;
 import nyamnyam.mapper.MenuMapper;
 import nyamnyam.mapper.StoreMapper;
+import nyamnyam.service.store.ChangeStoreImageService;
 
 @Controller
 @RequestMapping("store")
@@ -23,6 +26,8 @@ public class StoreController {
 	StoreMapper storeMapper;
 	@Autowired
 	MenuMapper menuMapper;
+	@Autowired
+	ChangeStoreImageService changeStoreImageService;
 	
 	@PostMapping("storeManage")
 	public String storeManage(@RequestParam("ornerNum") String ornerNum, HttpSession session, Model model) {
@@ -37,8 +42,15 @@ public class StoreController {
 		return "thymeleaf/ornerView/storeManagePage";
 	}
 	
-	/*@GetMapping("storeDetailPage")
-	public String storeDetailPage() {
-		
-	}*/
+	@GetMapping("changeProfileImage")
+	public String changeProfileImage() {
+		return "thymeleaf/store/profileImageForm";
+	}
+	@PostMapping("changeStoreImage")
+	public void changeProfileImage(StoreCommand storeComamd, HttpSession session) {
+		LoginDTO auth = (LoginDTO)session.getAttribute("auth");
+		String ornerNum = auth.getUserNum();
+		String storeNum = storeMapper.selectStoreNum(ornerNum);
+		//changeStoreImageService.execute(storeCommand);
+	};
 }

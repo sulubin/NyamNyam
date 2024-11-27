@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import nyamnyam.command.MenuCommand;
+import nyamnyam.service.menu.MenuDeleteService;
 import nyamnyam.service.menu.MenuRegistService;
 
 @Controller
@@ -20,10 +21,12 @@ import nyamnyam.service.menu.MenuRegistService;
 public class MenuController {
 	@Autowired
 	MenuRegistService menuRegistService;
+	@Autowired
+	MenuDeleteService menuDeleteService;
 	
 	@GetMapping("menuRegist")
 	public String menuAdd() {
-		return "thymeleaf/ornerView/menuForm";
+		return "thymeleaf/menu/menuForm";
 	}
 	@PostMapping("menuRegist")
 	public void menuRegist(@Validated MenuCommand menuCommand, HttpServletResponse response, HttpSession session) {
@@ -40,5 +43,10 @@ public class MenuController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	@PostMapping("menuDelete")
+	public void menuDelte(String menuNum) {;
+		menuDeleteService.execute(menuNum);
+		
 	}
 }

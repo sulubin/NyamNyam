@@ -10,27 +10,59 @@ $(function(){
 		popupWindow = window.open("/menu/menuRegist", "메뉴 추가", "width=600, height=800, left=500, top=100");
 		popupWindow.onbeforeunload = function(){
 			window.location.reload();
+			menuManage();
 		}
+		let popupCheckInterval = setInterval(function(){
+			if(popupWindow.closed){
+				clearInterval(popupCheckInterval);
+				menuManage();
+			}
+		});
 	})
 })
+
+function menuDelete(menuNum){
+	// 팝업으로 삭제 여부 물어보기
+	const result = confirm('메뉴를 삭제하시겠습니까?');
+	
+	if(result){
+		$.ajax({
+			type : "post",
+			url : "/menu/menuDelete",
+			data : {"menuNum" : menuNum},
+			success : function(){
+				alert("삭제 성공");
+				menuManage();
+			},
+			error : function(){
+				menuManage();
+			}
+		});
+	}
+}
+
 
 </script>
 </head>
 <body>
 <br/><br/><br/>
+<div align = "center">
 가게 관리 페이지입니다.<br/>
 배너 이미지<br/>
 프로필 이미지<br/>
 가게명 : [[${storeInfoDTO.storeDTO.storeName}]]<br/>
 가게 설명<br/>
 <span id = "menuRegist">메뉴 추가</span><br/>
-<table border = "1">
-	<tr th:each = "dto:${menuList}" height = "200"><td width = "200">메뉴 이미지</td>
+</div>
+<table border = "1" align = "center">
+	<tr th:each = "dto, idx:${menuList}" height = "200"><td width = "200">
+		<img th:src = "|/static/upload/${dto.menuStoreImage}|" width = "200" height = "200"/>
+	</td>
 	<td width = "600">
 		메뉴명 : [[${dto.menuName}]]<br/>
 		가격 : [[${dto.menuPrice}]]<br/>
 		설명 : [[${dto.menuIntroduction}]]<br/>
-		<div align = "right">메뉴 수정 | 메뉴 삭제</div>
+		<div align = "right">메뉴 수정 | <button type = "button" th:attr="onclick=|menuDelete('${dto.menuNum}');|"  class = "menuDeleteBtn">메뉴 삭제</button></div>
 	</td></tr>
 </table>
 

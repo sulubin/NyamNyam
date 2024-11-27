@@ -25,4 +25,8 @@ values (#{menuNum}, #{menuName}, #{menuPrice}, #{menuIntroduction}, #{menuOrigin
 select menu_num, menu_name, menu_price, menu_kind, menu_introduction, menu_image, menu_store_image, menu_origin, store_num
  from menu where store_num = #{store_num}
 </select>
+
+<delete id = "menuDelete" parameterType = "string">
+delete from menu where menu_num = #{menuNum}
+</delete>
 </mapper>

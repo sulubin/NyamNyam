@@ -5,12 +5,15 @@
 <title>메뉴 추가</title>
 <script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script type = "text/javascript">
-	
+function reload(){
+	parent.menuManage();
+}
+
 </script>
 </head>
 <body>
 메뉴 추가 페이지입니다.<br/>
-<form action = "menuRegist" method = "post" enctype="multipart/form-data"> 
+<form action = "menuRegist" method = "post"  id = "frm" enctype="multipart/form-data" onsubmit="reload();"> 
 메뉴명 : <input type =  "text" name = "menuName" /><br/>
 분류 : <input type = "text" name = "menuKind" /><br/>
 가격 : <input type =  "number" name = "menuPrice" /><br/>

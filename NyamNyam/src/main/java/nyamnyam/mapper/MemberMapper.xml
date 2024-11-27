@@ -4,9 +4,9 @@
         
 <mapper namespace = "nyamnyam.mapper.MemberMapper">
 <insert id = "memberInsert" parameterType = "member">
-insert into members (member_num, member_id, member_pw, member_name, member_gender, member_birth_date, member_regist_date
+insert into member (member_num, member_id, member_pw, member_name, member_gender, member_birth_date, member_regist_date
 			, member_addr, member_addr_detail, member_post)
- values(#{memberNum}, #{memberId}, #{memberPw}, #{memberName}, #{memberGender}, #{memberBirthDate}, sysdate
+ values (#{memberNum}, #{memberId}, #{memberPw}, #{memberName}, #{memberGender}, #{memberBirthDate}, sysdate
  , #{memberAddr}, #{memberAddrDetail}, #{memberPost})
 </insert>
 </mapper>

@@ -10,4 +10,5 @@ import nyamnyam.domain.MenuDTO;
 public interface MenuMapper {
 	public void menuInsert(MenuDTO dto);
 	public List<MenuDTO> selectMenuList(String storeNum);
+	public void menuDelete(String menuNum);
 }
