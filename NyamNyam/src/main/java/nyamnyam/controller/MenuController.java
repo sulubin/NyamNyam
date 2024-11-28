@@ -36,7 +36,8 @@ public class MenuController {
 		try {
 			out = response.getWriter();
 			String str = "<script>";
-				  str += "	window.self.close()";
+				  str += "	window.self.close();";
+				  str += "  window.opener.parent.location.reload();";
 				  str += "</script>";
 			out.print(str);
 			out.close();
@@ -45,8 +46,11 @@ public class MenuController {
 		}
 	}
 	@PostMapping("menuDelete")
-	public void menuDelte(String menuNum) {;
+	public void menuDelte(String menuNum) {
 		menuDeleteService.execute(menuNum);
-		
+	}
+	@GetMapping("menuDetail")
+	public String menuDetail(String menuNum) {
+		return "thymeleaf/menu/menuDetail";
 	}
 }

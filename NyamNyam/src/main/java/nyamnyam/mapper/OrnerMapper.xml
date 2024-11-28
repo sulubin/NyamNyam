@@ -4,7 +4,7 @@
         
 <mapper namespace = "nyamnyam.mapper.OrnerMapper">
 <insert id = "ornerInsert" parameterType = "nyamnyam.domain.OrnerDTO">
-insert into orners (orner_num, orner_id, orner_pw, orner_name, orner_phone, orner_email) 
+insert into orner (orner_num, orner_id, orner_pw, orner_name, orner_phone, orner_email) 
 values (#{ornerNum}, #{ornerId}, #{ornerPw}, #{ornerName}, #{ornerPhone}, #{ornerEmail})
 </insert>
 </mapper>

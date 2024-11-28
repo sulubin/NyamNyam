@@ -7,7 +7,7 @@
 <body>
 사장님 등록 페이지입니다.<br/>
 
-<form action = "ornerRegist" method = "post">
+<form action = "/orner/ornerRegist" method = "post" enctype="multipart/form-data">
 ----------사장님 정보------------<br/>
 사장 번호 : <input type = "text" name = "ornerNum" th:value = "${autoNum}" readonly = "readonly"/> <br/>
 아이디 : <input type = "text" name = "ornerId"/> <br/>
@@ -17,11 +17,14 @@
 이메일 : <input type = "email" name = "ornerEmail"/> <br/>
 ----------가게 정보------------<br/>
 가게명 : <input type = "text" name = "storeName" /><br/>
-분류 : <input type ="radio" name = "storeType"/>중식 <input type ="radio" name = "storeType"/>양식 <input type ="radio" name = "storeType"/>한식
+분류 : <input type ="radio" name = "storeType"/>중식 
+	  <input type ="radio" name = "storeType"/>양식
+	  <input type ="radio" name = "storeType"/>한식
 	  <input type ="radio" name = "storeType"/>일식<br/>
 가게 위치 : <input type = "text" name = "storeAddr"/><br/>
 가게 상세 위치 : <input type = "text" name = "storeAddrDetail"/><br/>
 가게 번호 : <input type = "tel" name = "storePhone" /><br/>
+가게 프로필 이미지 : <input type = "file" name = "storeProfileImage" /><br/>
 <input type = "submit" value = "등록"/>
 </form>
 </body>

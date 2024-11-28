@@ -1,5 +1,7 @@
 package nyamnyam.command;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -13,8 +15,6 @@ public class StoreCommand {
 	String storePhone;
 	String storeOpenTime;
 	String storeIntroduction;
-	String storeBannerImage;
-	String storeBannerStoreImage;
-	String storeProfileImage;
-	String storeProfileStoreImage;
+	MultipartFile storeBannerImage;
+	MultipartFile storeProfileImage;
 }

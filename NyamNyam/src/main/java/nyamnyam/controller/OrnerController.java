@@ -6,13 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpSession;
+import nyamnyam.command.OrnerCommand;
+import nyamnyam.command.StoreCommand;
 import nyamnyam.domain.LoginDTO;
 import nyamnyam.domain.StoreInfoDTO;
 import nyamnyam.mapper.StoreMapper;
 import nyamnyam.service.menu.MenuRegistService;
+import nyamnyam.service.orner.OrnerRegistService;
+import nyamnyam.service.store.StoreRegistService;
 
 @Controller
 @RequestMapping("orner")
@@ -21,6 +26,10 @@ public class OrnerController {
 	MenuRegistService menuRegistService;
 	@Autowired
 	StoreMapper storeMapper;
+	@Autowired
+	OrnerRegistService ornerRegistService;
+	@Autowired
+	StoreRegistService storeRegistService;
 	
 	@GetMapping("ornerMain")
 	public String ornerMain(HttpSession session, Model model) {
@@ -35,5 +44,11 @@ public class OrnerController {
 		return "thymeleaf/OrnerView/ornerMainPage";
 	}
 	
+	@PostMapping("ornerRegist")
+	public String ornerRegist(OrnerCommand ornerCommand, StoreCommand storeCommand) {
+		ornerRegistService.execute(ornerCommand);
+		storeRegistService.execute(storeCommand);
+		return "redirect:/employee/employeeMain";
+	}
 	
 }

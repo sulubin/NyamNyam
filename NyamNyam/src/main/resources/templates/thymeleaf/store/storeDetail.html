@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("menuInfo").click(function(){
+		$(".modal").style(display)
+	});
+})
+</script>
+</head>
+<body>
+<!-- 모달 창 -->
+<div class="modal">
+	<div class="modal_popup">
+		메뉴 정보<br/>
+		사이드 메뉴
+		<button type="button">닫기</button><button type="submit">장바구니에 추가</button>
+	</div>
+</div>
+
+
+<div align="center">
+<!-- 장바구니 -->
+<div style="float:right" width="100" align="center" >
+	<table border="1" width="200">
+		<tr><td>하이루</td></tr>
+	</table>
+</div>
+[[${storeInfoDTO.storeDTO.storeName}]] 가게 상세 페이지입니다.
+<table >
+
+</table>
+
+
+
+
+<!-- 메뉴 리스트 -->
+<table border="1" width="600">
+	<tr th:each="dto : ${menuList}"><td width="200">
+		<img th:src="|/static/upload/${dto.menuStoreImage}|"  width = "200" height = "150"/>
+	</td><td>
+		<div id = "menuInfo">
+		<a th:href = "|/menu/menuDetail?${dto.menuNum}|">[[${dto.menuName}]]</a><br/><br/>
+		<a th:href = "|/menu/menuDetail?${dto.menuNum}|">[[${dto.menuPrice}]]원</a><br/><br/>
+		<a th:href = "|/menu/menuDetail?${dto.menuNum}|">[[${dto.menuIntroduction}]]</a>
+		<button type="button" class="cart_popup">메뉴 보기</button>
+		</div>
+	</td></tr>
+</table>
+
+</div>
+</body>
+</html>

@@ -21,10 +21,6 @@ public class EmployeeController {
 	@Autowired
 	AutoNumService autoNumService;
 	@Autowired
-	OrnerRegistService ornerRegistService;
-	@Autowired
-	StoreRegistService storeRegistService;
-	@Autowired
 	DeliverymanRegistService deliverymanRegistService;
 	
 	// 직원 메인 페이지
@@ -35,19 +31,13 @@ public class EmployeeController {
 	// 사장 등록 페이지
 	@GetMapping("ornerRegist")
 	public String ornerRegist(Model model) {
-		String tableName = "orners";
+		String tableName = "orner";
 		String columnName = "orner_num";
 		String sep = "orner_"; 
 		autoNumService.execute(tableName, columnName, sep, model);
 		return "thymeleaf/employeeView/ornerRegistForm";
 	}
 	// 사장 및 가게 등록 
-	@PostMapping("ornerRegist")
-	public String ornerRegist(OrnerCommand ornerCommand, StoreCommand storeCommand) {
-		ornerRegistService.execute(ornerCommand);
-		storeRegistService.execute(storeCommand);
-		return "redirect:/employee/employeeMain";
-	}
 	@GetMapping("deliverymanRegist")
 	public String deliverymanRegist(Model model) {
 		autoNumService.execute("deliverymans", "deliveryman_num", "deliveryman_", model);

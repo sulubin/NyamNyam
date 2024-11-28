@@ -11,6 +11,7 @@
 <script type = "text/javascript">
 $(function(){
 	menuManage();
+	
 	$("#store").click(function(){
 		menuManage();
 	});
@@ -24,9 +25,9 @@ $(function(){
 		inquireManage();
 	});	
 	
-	$(".profile").click(function(){
+	/*$(".profile").click(function(){
 		window.open("/store/changeProfileImage", "프로필 이미지 변경", "width=600, height=600, left=200, top=200");
-	})
+	})*/
 })
 function menuManage(){
 	$.ajax({
@@ -42,6 +43,7 @@ function menuManage(){
 		}
 	});
 }
+
 function orderManage(){
 }
 function reviewManage(){
@@ -65,12 +67,12 @@ function inquireManage(){
 
 <!-- Header -->
 <header class="w3-display-container w3-content w3-center" style="max-width:1500px;background-image: url('../static/image/회백색 배경.jpg');">
-  <div class="profile"><!--  style="max-width:1500px" -->
-  	<img src = "../static/image/안녕마루.jpg" width = "200" height = "200" id = "profileImage"/>
+  <div class="profile" style="max-width:1500px"><!--  style="max-width:1500px" -->
+  	<img th:src = "|../static/upload/${storeInfoDTO.storeDTO.storeProfileStoreImage}|" width = "200" height = "200" id = "profileImage"/>
   </div>
   <h2 style="position:relative;left:-400px;top:-120px">[[${storeInfoDTO.storeDTO.storeName}]]</h2>
   <h3 style="position:relative;left:-400px;top: -80px">[[${storeInfoDTO.storeDTO.storeIntroduction}]]</h3>
-  <a href = "/login/logout">로그아웃</a>
+  
   
   <!-- Navbar (placed at the bottom of the header image) -->
   <div class="w3-bar w3-light-grey w3-round w3-display-bottommiddle w3-hide-small" style="bottom:-35px;">
@@ -80,7 +82,8 @@ function inquireManage(){
     <a id="inquire" class="w3-bar-item w3-button">문의관리</a>
   </div>
 </header>
-
+<br/>
+<a href = "/login/logout">로그아웃</a>
 <div id = "content">
 </div>
 </body>

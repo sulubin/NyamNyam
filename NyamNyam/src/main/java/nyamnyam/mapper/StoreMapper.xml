@@ -35,25 +35,44 @@ store_banner_image, store_banner_store_image, store_profile_image, store_profile
 
 
 <insert id = "storeInsert" parameterType = "store">
-insert into stores (store_num, store_name, orner_num, store_type, store_addr, store_addr_detail, store_phone, store_open_time, store_introduction)
- values (#{storeNum}, #{storeName}, #{ornerNum}, #{storeType}, #{storeAddr}, #{storeAddrDetail}, null, null, null)
+insert into store (store_num, store_name, orner_num, store_type, store_addr, store_addr_detail, store_phone, store_open_time, store_introduction
+				  , store_profile_image, store_profile_store_image)
+ values (#{storeNum}, #{storeName}, #{ornerNum}, #{storeType}, #{storeAddr}, #{storeAddrDetail}, null, null, null, #{storeProfileImage}, #{storeProfileStoreImage})
 </insert>
 
 <select id = "selectStoreNum" parameterType = "string" resultType = "string">
-select store_num from stores where orner_num = #{ornerNum}
+select store_num from store where orner_num = #{ornerNum}
 </select>
 
 <select id = "storeSelectAll" resultType = "store">
-select store_num as storeNum, store_name as storeName from stores
+select <include refid="storeBaseColumn"/> from store
 </select>
 
 <select id = "selectStoreInfoList" parameterType = "string" resultMap = "storeInfoResultMap">
-select store_num, store_name, store_introduction
+select store_num, store_name, store_introduction, store_profile_store_image
 	 , o.orner_num, orner_name
- from stores s join orners o 
+ from store s join orner o 
  on s.orner_num = o.orner_num 
  where s.store_num = #{storeNum}
 </select>
+
+<update id="storeUpdate" parameterType="store">
+update store set store_name = #{storeName}, store_type = #{storeType}, store_addr = #{storeAddr}, store_addr_detail = #{storeAddrDetail}
+			   , store_phone = #{storePhone}, store_open_time = #{storeOpenTime}, store_introduction = #{storeIntroduction}
+			   , store_profile_image = #{storeProfileImage}
+where store_num = #{storeNum}
+
+
+dto.setStoreName(storeCommand.getStoreName());
+		dto.setStoreType(storeCommand.getStoreName());
+		dto.setStoreAddr(storeCommand.getStoreName());
+		dto.setStoreAddrDetail(storeCommand.getStoreName());
+		dto.setStorePhone(storeCommand.getStoreName());
+		dto.setStoreOpenTime(storeCommand.getStoreName());
+		dto.setStoreIntroduction(storeCommand.getStoreIntroduction());
+		dto.setStoreProfileImage(storeCommand.getStoreName());
+		dto.setStoreBannerImage(storeCommand.getStoreName());
+</update>
 </mapper>
 
 

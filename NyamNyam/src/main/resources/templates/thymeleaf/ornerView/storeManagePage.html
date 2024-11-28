@@ -19,6 +19,10 @@ $(function(){
 			}
 		});
 	})
+	
+	$("#storeInformationManage").click(function(){
+		storeInformationManage();
+	})
 })
 
 function menuDelete(menuNum){
@@ -41,22 +45,36 @@ function menuDelete(menuNum){
 	}
 }
 
-
+function storeInformationManage(){
+	$.ajax({
+		type : "post",
+		url : "/store/storeInformationManage",
+		dataType : "html",
+		data : {"ornerNum" : "[[${storeInfoDTO.ornerDTO.ornerNum}]]"},
+		success : function(item){
+			 $("#content").html(item);
+		},
+		error : function(){
+			alert("오류 발생");
+		}
+	});
+}
 </script>
 </head>
 <body>
-<br/><br/><br/>
+<div align = "left" style = "float:left">
+	<ul>
+		<li><span id = "menuManage">메뉴 정보 수정</span></li>
+		<li><span id = "storeInformationManage">가게 정보 수정</span></li>
+	</ul>
+</div>
 <div align = "center">
-가게 관리 페이지입니다.<br/>
-배너 이미지<br/>
-프로필 이미지<br/>
-가게명 : [[${storeInfoDTO.storeDTO.storeName}]]<br/>
-가게 설명<br/>
+가게 정보 수정 페이지<br/><br/>
 <span id = "menuRegist">메뉴 추가</span><br/>
 </div>
 <table border = "1" align = "center">
 	<tr th:each = "dto, idx:${menuList}" height = "200"><td width = "200">
-		<img th:src = "|/static/upload/${dto.menuStoreImage}|" width = "200" height = "200"/>
+		<img th:src = "|../static/upload/${dto.menuStoreImage}|" width = "200" height = "200"/>
 	</td>
 	<td width = "600">
 		메뉴명 : [[${dto.menuName}]]<br/>
