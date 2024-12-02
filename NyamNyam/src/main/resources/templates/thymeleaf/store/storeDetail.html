@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!-- link rel="stylesheet" href="../static/css/storeManagePage.css"-->
 <script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -10,48 +13,168 @@ $(function(){
 		$(".modal").style(display)
 	});
 })
+
+function cartAdd(menuNum){
+	if([[${#strings.isEmpty(session.auth)}]]){
+		popupWindow = window.open("/login/loginPopup", "로그인", "width=500, height=800,top = 100, left=500");
+
+		popupWindow.onbeforeunload = function(){ 
+			window.location.reload();
+		}
+	}
+	else{
+		$("#modal").fadeIn()
+		$.ajax({
+			type: "post",
+			url: "/order/cartForm",
+			data: {"menuNum":menuNum},
+			dataType: "html",
+			success: function(item){
+				$("#modalContent").html(item);
+			},
+			error: function(){
+				alert("서버 오류");
+			}
+		})
+	}
+}
+
+function cartDel(menuNum){
+	$.ajax({
+		type: "post",
+		url: "/order/cartDel",
+		data: {"menuNum":menuNum},
+		success:function(){
+			window.location.reload();
+		},
+		error: function(){
+			alert("서버 오류");
+		}
+	})
+}
 </script>
+<style>
+.dialog{
+	display:none;
+	position:fixed;
+	left:0px;
+	top:0px;
+	z-index:10px;
+	width:100%;
+	height:100%;
+	backgroud:rgba(0, 0, 0, 0.4);
+}
+
+.dialog>.tb {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  left: 200px;
+}
+
+.dialog>.tb .inner {
+  width: 100%;
+  padding: 20px;
+  background: #fff;
+  border-radius: 16px;
+}
+
+.dialog .top {
+  display: flex;
+  align-item: center;
+  border-bottom: 1px solid #ddd;
+  justify-content: space-between;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.dialog .title {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.dialog .ct {
+  max-height: 60vh;
+  height: 60vh;
+  overflow-y: auto;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: #fff;
+}
+</style>
 </head>
 <body>
-<!-- 모달 창 -->
-<div class="modal">
-	<div class="modal_popup">
-		메뉴 정보<br/>
-		사이드 메뉴
-		<button type="button">닫기</button><button type="submit">장바구니에 추가</button>
-	</div>
+<!-- Header -->
+<div style="border:1px solid black;width:1200px;height:300px;position:relative;left:300px;">
+
 </div>
-
-
-<div align="center">
-<!-- 장바구니 -->
-<div style="float:right" width="100" align="center" >
-	<table border="1" width="200">
-		<tr><td>하이루</td></tr>
-	</table>
-</div>
-[[${storeInfoDTO.storeDTO.storeName}]] 가게 상세 페이지입니다.
-<table >
-
-</table>
-
-
-
 
 <!-- 메뉴 리스트 -->
+<div align="center" style="border:1px solid black;width:700px;position:relative;left:550px;top:50px;">
+[[${storeInfoDTO.storeDTO.storeName}]] 가게 상세 페이지입니다.
 <table border="1" width="600">
 	<tr th:each="dto : ${menuList}"><td width="200">
-		<img th:src="|/static/upload/${dto.menuStoreImage}|"  width = "200" height = "150"/>
+		<img th:src="|/static/upload/${dto.menuStoreImage}|"  width="200" height="150"/>
 	</td><td>
 		<div id = "menuInfo">
-		<a th:href = "|/menu/menuDetail?${dto.menuNum}|">[[${dto.menuName}]]</a><br/><br/>
-		<a th:href = "|/menu/menuDetail?${dto.menuNum}|">[[${dto.menuPrice}]]원</a><br/><br/>
-		<a th:href = "|/menu/menuDetail?${dto.menuNum}|">[[${dto.menuIntroduction}]]</a>
-		<button type="button" class="cart_popup">메뉴 보기</button>
+		메뉴명 : [[${dto.menuName}]]<br/><br/>
+		가격 : [[${dto.menuPrice}]]원<br/><br/>
+		소개 : [[${dto.menuIntroduction}]]<br/>
+		<button type="button" class="cart_popup"  th:attr="onclick=|cartAdd('${dto.menuNum}')|">메뉴 담기</button>
 		</div>
 	</td></tr>
 </table>
-
 </div>
+
+<!-- 장바구니 -->
+<form action="/order/menuOrder" method="post">
+<div style="border:1px solid black;position:fixed;right:200px;height:400px;width:300px;top:310px">
+	<table border="1" width="300">
+		<tr><th colspan="3">장바구니</th></tr>
+		<th:block th:if="${cartList} != null">
+			<tr th:each="cartListDTO : ${cartList}"><td width="100px">[[${cartListDTO.menuDTO.menuName}]]</td>
+				<td>[[${cartListDTO.menuDTO.menuPrice}]]원</td>
+				<td><button type="button" th:attr="onclick=|cartDel('${cartListDTO.menuDTO.menuNum}')|">삭제</button></td></tr>
+			<tr><th colspan="3">총 가격: [[${totPrice}]]원</th></tr>
+			<tr><th colspan="3"><button type="submit">주문하기</button></th></tr>
+		</th:block>
+		<th:block th:if="${cartList} == null">
+		</th:block>
+		
+	</table>
+</div>
+</form>
+<!-- 장바구니 모달 창 -->
+<div id="modal" class="dialog">
+	<div class="tb">
+		<div class="inner" style="max-width:500px;">
+			<div class="top">
+				<div class="title">제목</div>
+				<a th:href="|/store/storeDetail?storeNum=${storeInfoDTO.storeDTO.storeNum}|" class="p_closs">닫기</a>
+			</div>
+			<div class="ct" id="modalContent">
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- 가게 상세 정보 -->
+<div id="storeInfo" style="border:1px solid black;width:300px;height:600px;position:fixed;top:310px;left:150px">
+	<table border="1" width="300px">
+		<tr><td width="100px">가게명</td><td>[[${storeInfoDTO.storeDTO.storeName}]]</td></tr>
+		<tr><td>주소</td><td>[[${storeInfoDTO.storeDTO.storeAddr}]]</td></tr>
+		<tr><td>번호</td><td>[[${storeInfoDTO.storeDTO.storePhone}]]</td></tr>
+		<tr><td>오픈시간</td><td><textarea rows="5">[[${storeInfoDTO.storeDTO.storeOpenTime}]]</textarea></td></tr>
+		<tr><td>소개</td><td><textarea rows="5">[[${storeInfoDTO.storeDTO.storeIntroduction}]]</textarea></td></tr>
+		<tr><td>배달비</td><td>배달비</td></tr>
+	</table>
+</div>
+
+
+
+
+
 </body>
 </html>

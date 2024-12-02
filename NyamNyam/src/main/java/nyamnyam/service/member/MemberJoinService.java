@@ -16,7 +16,7 @@ public class MemberJoinService {
 	MemberMapper memberMapper;
 	public void execute(MemberCommand memberCommand) {
 		MemberDTO dto = new MemberDTO();
-		String autoNum = mainMapper.selectAutoNum("members", "member_num", "mem_");
+		String autoNum = mainMapper.selectAutoNum("member", "member_num", "mem_");
 		dto.setMemberNum(autoNum);
 		dto.setMemberId(memberCommand.getMemberId());
 		dto.setMemberPw(memberCommand.getMemberPw());

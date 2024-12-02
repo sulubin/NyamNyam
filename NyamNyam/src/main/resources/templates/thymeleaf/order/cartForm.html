@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div align="center">
+<form action="/order/cartAdd" method="post">
+<input type="hidden" name="menuNum" th:value="${menuNum}"/>
+<table>
+	<tr><td colspan="2">----------메뉴----------</td></tr>
+	<tr><td>메뉴명</td><td>메뉴명</td></tr>
+	<tr><td>수량</td><td><input type="number" name="cartQty" value="1"/></td></tr>
+	<tr><td colspan="2">----------옵션----------</td></tr>
+	<tr><td>안맵게</td><td><input type="radio" name="option" /></td></tr>
+	<tr><td>기본</td><td><input type="radio" name="option"></td></tr>
+	<tr><td>맵게</td><td><input type="radio" name="option"></td></tr>
+	<tr><td colspan="2">----------사이드----------</td></tr>
+	<tr><td>콜라</td><td><input type="radio"></td></tr>
+	<tr><td>사이다</td><td><input type="radio"></td></tr>
+	<tr><td>김치</td><td><input type="radio"></td></tr>
+	<tr><td>단무지</td><td><input type="radio"></td></tr>
+</table>
+<button type="submit">장바구니 추가</button>
+</form>
+</div>
+</body>
+</html>

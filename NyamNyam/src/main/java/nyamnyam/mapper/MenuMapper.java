@@ -11,4 +11,6 @@ public interface MenuMapper {
 	public void menuInsert(MenuDTO dto);
 	public List<MenuDTO> selectMenuList(String storeNum);
 	public void menuDelete(String menuNum);
+	public MenuDTO selectMenuOne(String menuNum);
+	public void menuUpdate(MenuDTO dto);
 }

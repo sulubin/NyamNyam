@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div align="center">
+메뉴 수정 페이지입니다.<br/>
+<form action="/menu/menuUpdate" method="post" enctype="multipart/form-data">
+<input type="hidden" name="menuNum" th:value="${dto.menuNum}"/>
+<table border="1">
+	<tr><td>메뉴명</td><td><input type="text" name="menuName" th:value="${dto.menuName}"/></td></tr>
+	<tr><td>가격</td><td><input type="number" name="menuPrice" th:value="${dto.menuPrice}"/></td></tr>
+	<tr><td>분류</td><td><input type="text" name="menuKind" th:value="${dto.menuKind}"/></td></tr>
+	<tr><td>메뉴소개</td><td><input type="text" name="menuIntroduction" th:value="${dto.menuIntroduction}"/></td></tr>
+	<tr><td>이미지</td><td><input type="file" name="menuImage" th:value="${dto.menuImage}"/></td></tr>
+	<tr><td>원산지</td><td><input type="text" name="menuOrigin" th:value="${dto.menuOrigin}"/></td></tr>
+	<tr><td colspan="2"><input type="submit" value="수정"/></td></tr>
+</table>
+</form>
+</div>
+</body>
+</html>

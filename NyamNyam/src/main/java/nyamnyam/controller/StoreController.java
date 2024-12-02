@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import nyamnyam.command.StoreCommand;
+import nyamnyam.domain.CartListDTO;
 import nyamnyam.domain.LoginDTO;
 import nyamnyam.domain.MenuDTO;
 import nyamnyam.domain.StoreInfoDTO;
 import nyamnyam.mapper.MenuMapper;
+import nyamnyam.mapper.OrderMapper;
 import nyamnyam.mapper.StoreMapper;
-import nyamnyam.service.store.ChangeStoreImageService;
+import nyamnyam.service.order.CartListService;
 import nyamnyam.service.store.StoreUpdateService;
 
 @Controller
@@ -28,9 +30,11 @@ public class StoreController {
 	@Autowired
 	MenuMapper menuMapper;
 	@Autowired
-	ChangeStoreImageService changeStoreImageService;
+	OrderMapper orderMapper;
 	@Autowired
 	StoreUpdateService storeUpdateService;
+	@Autowired
+	CartListService cartListService;
 	
 	@PostMapping("storeManage")
 	public String storeManage(@RequestParam("ornerNum") String ornerNum, HttpSession session, Model model) {
@@ -40,9 +44,8 @@ public class StoreController {
 		model.addAttribute("storeInfoDTO", storeInfoDTO);
 		// 메뉴 정보 가져오기
 		List<MenuDTO> menuList = menuMapper.selectMenuList(storeNum);
-		//System.out.println("메뉴 정보 : " + menuList);
 		model.addAttribute("menuList", menuList);
-		return "thymeleaf/ornerView/storeManagePage";
+		return "thymeleaf/ornerView/storeMenuManagePage";
 	}
 	@PostMapping("storeInformationManage")
 	public String storeInformationManage(@RequestParam("ornerNum") String ornerNum, HttpSession session, Model model) {
@@ -52,31 +55,29 @@ public class StoreController {
 		model.addAttribute("storeInfoDTO", storeInfoDTO);
 		return "thymeleaf/ornerView/storeInformationPage";
 	}
-	@GetMapping("changeProfileImage")
-	public String changeProfileImage() {
-		return "thymeleaf/store/profileImageForm";
-	}
-	@PostMapping("changeStoreImage")
-	public void changeProfileImage(StoreCommand storeComamd, HttpSession session) {
-		LoginDTO auth = (LoginDTO)session.getAttribute("auth");
-		String ornerNum = auth.getUserNum();
-		String storeNum = storeMapper.selectStoreNum(ornerNum);
-		//changeStoreImageService.execute(storeCommand);
-	}
+	
 	@PostMapping("storeModify")
-	public String storeModify(StoreCommand storeCommand) {
-		storeUpdateService.execute(storeCommand);
-		return "redirect:/store/storeManage";
+	public String storeModify(StoreCommand storeCommand, HttpSession session) {
+		LoginDTO auth = (LoginDTO)session.getAttribute("auth");
+		String storeNum = storeMapper.selectStoreNum(auth.getUserNum());
+		storeUpdateService.execute(storeCommand, storeNum);
+		return "redirect:/orner/ornerMain";
 	}
 	@GetMapping("storeDetail")
-	public String storeDetail(String storeNum, Model model) {
+	public String storeDetail(@RequestParam("storeNum") String storeNum, HttpSession session, Model model) {
 		StoreInfoDTO storeInfoDTO = storeMapper.selectStoreInfoList(storeNum);
 		model.addAttribute("storeInfoDTO", storeInfoDTO);
 		// 메뉴 정보 가져오기
 		List<MenuDTO> menuList = menuMapper.selectMenuList(storeNum);
-		//System.out.println("메뉴 정보 : " + menuList);
 		model.addAttribute("menuList", menuList);	
-		return "thymeleaf/store/storeDetail";
+		// 카트 정보 가져오기
+		LoginDTO auth = (LoginDTO)session.getAttribute("auth");
+		if(auth == null) {
+			return "thymeleaf/store/storeDetail";
+		}else {
+			cartListService.execute(session, model);
+			return "thymeleaf/store/storeDetail";
+		}
 	}
 	
 	

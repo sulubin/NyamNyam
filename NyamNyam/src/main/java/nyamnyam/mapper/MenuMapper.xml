@@ -26,6 +26,17 @@ select menu_num, menu_name, menu_price, menu_kind, menu_introduction, menu_image
  from menu where store_num = #{store_num}
 </select>
 
+<select id = "selectMenuOne" parameterType = "string" resultType = "menu">
+select menu_num, menu_name, menu_price, menu_kind, menu_introduction, menu_image, menu_store_image, menu_origin, store_num
+ from menu where menu_num = #{menu_num}
+</select>
+
+<update id="menuUpdate" parameterType="menu">
+update menu set menu_name = #{menuName}, menu_price = #{menuPrice}, menu_kind = #{menuKind}
+			  , menu_introduction = #{menuIntroduction}, menu_origin = #{menuOrigin}
+ where menu_num = #{menuNum}
+</update>
+
 <delete id = "menuDelete" parameterType = "string">
 delete from menu where menu_num = #{menuNum}
 </delete>

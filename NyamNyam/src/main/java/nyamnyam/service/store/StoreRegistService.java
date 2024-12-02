@@ -28,6 +28,7 @@ public class StoreRegistService {
 		dto.setStoreType(storeCommand.getStoreType());
 		dto.setStoreAddr(storeCommand.getStoreAddr());
 		dto.setStoreAddrDetail(storeCommand.getStoreAddrDetail());
+		dto.setStorePhone(storeCommand.getStorePhone());
 		dto.setOrnerNum(storeCommand.getOrnerNum());
 		// 파일 경로 찾기
 		URL resource = getClass().getClassLoader().getResource("static/upload");

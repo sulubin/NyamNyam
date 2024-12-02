@@ -10,6 +10,7 @@ $(function(){
 		menuManage();
 	})
 });
+
 function menuManage(){
 	$.ajax({
 		type : "post",
@@ -34,23 +35,25 @@ function menuManage(){
 	</ul>
 </div>
 <div align = "center">
-메뉴 수정 페이지입니다.
+가게 정보 수정 페이지입니다.
 
-<form action="/store/storeModify" method="post">
+<form action="/store/storeModify" method="post"  enctype="multipart/form-data">
 <input type="hidden" name="storeNum" th:value="${storeInfoDTO.storeDTO.storeNum}"/>
 <table border="1" width="600">
 <tr><td>가게명</td><td><input type="text" name="storeName" th:value="${storeInfoDTO.storeDTO.storeName}"/></td></tr>
-<tr><td>가게 분류</td><td><input type="radio" name="storeType" value="한식" /> 한식
-						<input type="radio" name="storeType" value="중식" /> 중식
-						<input type="radio" name="storeType" value="일식" /> 일식
-						<input type="radio" name="storeType" value="양식" /> 양식
+<tr><td>가게 분류</td><td><input type="radio" name="storeType" value="한식" th:checked="${storeInfoDTO.storeDTO.storeType=='한식'}"/> 한식
+						<input type="radio" name="storeType" value="중식"  th:checked="${storeInfoDTO.storeDTO.storeType=='중식'}"/> 중식
+						<input type="radio" name="storeType" value="일식"  th:checked="${storeInfoDTO.storeDTO.storeType=='일식'}"/> 일식
+						<input type="radio" name="storeType" value="양식"  th:checked="${storeInfoDTO.storeDTO.storeType=='양식'}"/> 양식
 			   		</td></tr>
 <tr><td>가게 주소</td><td><input type="text" name="storeAddr" th:value="${storeInfoDTO.storeDTO.storeAddr}"/></td></tr>
 <tr><td>가게 상세 주소</td><td><input type="text" name="storeAddrDetail" th:value="${storeInfoDTO.storeDTO.storeAddrDetail}"/></td></tr>
 <tr><td>가게 전화번호</td><td><input type="text" name="storePhone" th:value="${storeInfoDTO.storeDTO.storePhone}"/></td></tr>
-<tr><td>가게 오픈 시간</td><td><input type="date" name="storeOpenTime" th:value="${storeInfoDTO.storeDTO.storeOpenTime}"/></td></tr>
+<tr><td>가게 오픈 시간</td><td><textarea rows="5" cols="20" name="storeOpenTime">[[${storeInfoDTO.storeDTO.storeOpenTime}]]</textarea></td></tr>
 <tr><td>가게 소개</td><td><textarea rows="5" cols="20" name = "storeIntroduction" >[[${storeInfoDTO.storeDTO.storeIntroduction}]]</textarea></td></tr>
-<tr><td>가게 프로필 사진</td><td><input type="file" name="storeProfileImage" th:value="${storeInfoDTO.storeDTO.storeProfileImage}"/></td></tr>
+<tr><td>가게 프로필 사진</td><td>
+						<span>[[${storeInfoDTO.storeDTO.storeProfileImage}]]</span>
+					</td></tr>
 <tr><td>가게 배너 사진</td><td><input type="file" name="storeBannerImage" /></td></tr>
 <tr><td colspan="2"><input type="submit" value="수정"/></td></tr>
 

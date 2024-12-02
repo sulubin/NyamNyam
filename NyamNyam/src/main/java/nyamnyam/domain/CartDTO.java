@@ -1,0 +1,13 @@
+package nyamnyam.domain;
+
+import org.apache.ibatis.type.Alias;
+
+import lombok.Data;
+
+@Data
+@Alias("cart")
+public class CartDTO {
+	String menuNum;
+	String memberNum;
+	Integer cartQty;
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace = "nyamnyam.mapper.OrderMapper">
+
+<resultMap type="cartList" id="cartListResultMap">
+		<association property="cartDTO" javaType = "cart">
+			<id column="menu_num" jdbcType="VARCHAR" property="menuNum"></id>
+			<result column="member_num" jdbcType="VARCHAR" property="memberNum"></result>
+			<result column="cart_qty" jdbcType="BIGINT" property="cartQty"></result>
+		</association>
+		<association property="menuDTO" javaType = "menu">
+			<id column="menu_num" jdbcType="VARCHAR" property="menuNum"/>
+			<result column="menu_name" jdbcType="VARCHAR" property="menuName"/>
+			<result column="menu_price" jdbcType="BIGINT" property="menuPrice"/>
+			<result column="menu_store_image" jdbcType="VARCHAR" property="menuStoreImage"/>
+		</association>
+</resultMap>
+
+<insert id="cartInsert" parameterType="cart">
+insert into cart (menu_num, member_num, cart_qty) values (#{menuNum}, #{memberNum}, #{cartQty})
+</insert>
+
+<select id="cartSelectAll" parameterType="string" resultMap="cartListResultMap">
+select c.menu_num, menu_name, menu_price, menu_store_image
+	 , member_num, cart_qty
+ from menu m right outer join cart c on m.menu_num = c.menu_num
+ where member_num = #{memberNum}
+</select>
+
+<delete id="cartDelete" parameterType="string">
+delete from cart where menu_num = #{menuNum} and memberNum = #{memberNum}
+</delete>
+</mapper>
