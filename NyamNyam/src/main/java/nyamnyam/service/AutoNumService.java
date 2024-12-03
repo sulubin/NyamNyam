@@ -11,8 +11,9 @@ public class AutoNumService {
 	@Autowired
 	MainMapper mainMapper;
 	
-	public void execute(String tableName, String columnName, String sep, Model model) {
+	public String execute(String tableName, String columnName, String sep, Model model) {
 		String autoNum = mainMapper.selectAutoNum(tableName, columnName, sep);
 		model.addAttribute("autoNum", autoNum);
+		return autoNum;
 	}
 }

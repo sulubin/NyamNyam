@@ -5,10 +5,54 @@
 <title>Insert title here</title>
 </head>
 <body>
-주소가 어딘지<br/>
-어떤 메뉴를 선택했는지<br/>
-요청사항<br/>
-결제수단<br/>
-총 가격<br/>
+<div style="border:1px solid black; width:1400px; height:1800px; position:relative;left:270px;">
+	<!-- 주문 내용 -->
+	<div style="border:1px solid black; width:950px; position:relative; left:32px;">
+		<table border="1" width="950px">
+			<tr><th colspan="3">주문 내용</th></tr>
+			<tr th:each="cartListDTO:${list}">
+				<td width="100" height="100"><img th:src="|/static/upload/${cartListDTO.menuDTO.menuStoreImage}|" width="100" height="100"/></td>
+											<td>[[${cartListDTO.menuDTO.menuName}]]<br/>
+								[[${cartListDTO.menuDTO.menuPrice}]]</td>
+			</tr>
+		</table>
+	</div>
+	<form action="/order/menuOrder" method="post">
+	<input type="hidden" name="orderPrice" th:value="${totPrice}"/>
+	<!-- 배달 정보 -->
+	<div style="border:1px solid black; width:950px; height:400px; position:static; margin:30px;">
+		<table border="1" width="950px">
+		<colgroup>
+    		<col width="200px"/>
+	  	</colgroup>
+			<tr><th colspan="2">배달 정보 입력</th></tr>
+			<tr height="70px"><td>주소:</td><td><input type="text" name="deliveryAddr"/></td></tr>
+			<tr height="70px"><td>상세 주소:</td><td><input type="text" name="deliveryAddrDetail"/></td></tr>
+			<tr height="70px"><td>전화번호:</td><td><input type="text" name="deliveryPhone"/></td></tr>
+			<tr height="70px"><td>배송요청사항:</td><td><input type="text" name="deliveryMessage"/></td></tr>
+		</table>
+	</div>
+	
+	<!-- 요청 사항 -->
+	<div style="border:1px solid black; width:950px; height:110px; position:static; margin:30px">
+		<table border="1" width="950px">
+			<tr><th>요청사항</th></tr>
+			<tr><td><textarea name="orderMessage" rows="4" cols="130"></textarea></td></tr>
+		</table>
+	</div>
+	
+	<!-- 포인트 -->
+	<!-- 최종 주문 내용 -->
+	<div style="border:1px solid black; width:350px; position:fixed; right:270px; top:30px;">
+		<table border="1" width="350">
+			<tr><th>최종 결제 금액</th></tr>
+			<tr><td>가격</td></tr>
+			<tr><td>배달비</td></tr>
+			<tr><th>최종가격 : [[${totPrice}]]</th></tr>
+			<tr><th><button type="submit">결제하기</button></th></tr>
+		</table>
+	</div>
+	</form>
+</div>
 </body>
 </html>

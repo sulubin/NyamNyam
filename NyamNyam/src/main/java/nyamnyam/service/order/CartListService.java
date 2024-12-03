@@ -15,7 +15,7 @@ import nyamnyam.mapper.OrderMapper;
 public class CartListService {
 	@Autowired
 	OrderMapper orderMapper;
-	public void execute(HttpSession session, Model model) {
+	public Integer execute(HttpSession session, Model model) {
 		LoginDTO auth = (LoginDTO)session.getAttribute("auth");
 		List<CartListDTO> cartList = orderMapper.cartSelectAll(auth.getUserNum());
 		model.addAttribute("cartList", cartList);
@@ -24,5 +24,6 @@ public class CartListService {
 			totPrice += dto.getCartDTO().getCartQty() * dto.getMenuDTO().getMenuPrice();
 		}
 		model.addAttribute("totPrice", totPrice);
+		return totPrice;
 	}
 }

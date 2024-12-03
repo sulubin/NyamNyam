@@ -22,11 +22,27 @@
 insert into cart (menu_num, member_num, cart_qty) values (#{menuNum}, #{memberNum}, #{cartQty})
 </insert>
 
+<insert id="orderInfoInsert" parameterType="orderInfo">
+insert into order_info (order_num, delivery_addr, delivery_addr_detail, delivery_phone, delivery_message, order_message, order_status, order_date, order_price, member_num) 
+ values (#{orderNum}, #{deliveryAddr}, #{deliveryAddrDetail}, #{deliveryPhone}, #{deliveryMessage}, #{orderMessage}, '주문대기', sysdate, #{orderPrice}, #{memberNum})
+</insert>
+
+<insert id="paymentInsert" parameterType="payment">
+insert into payment(order_num,confirm_num,card_num,tid,total_price,result_message,pay_method
+					,appl_date,appl_time)
+values(#{orderNum},#{confirmNum},#{cardNum},#{tid},#{totalPrice},#{resultMessage},#{payMethod},#{applDate},#{applTime})
+</insert>
+
 <select id="cartSelectAll" parameterType="string" resultMap="cartListResultMap">
 select c.menu_num, menu_name, menu_price, menu_store_image
 	 , member_num, cart_qty
  from menu m right outer join cart c on m.menu_num = c.menu_num
  where member_num = #{memberNum}
+</select>
+
+<select id="orderSelectOne" parameterType="string">
+select order_num, delivery_addr, delivery_addr_detail, delivery_phone, delivery_message, order_message, order_status, order_date, order_price, member_num
+ from order_info where order_num = #{orderNum}
 </select>
 
 <delete id="cartDelete" parameterType="string">
