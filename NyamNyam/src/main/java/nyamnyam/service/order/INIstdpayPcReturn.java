@@ -60,7 +60,6 @@ public class INIstdpayPcReturn {
 				String authUrl	= paramMap.get("authUrl");
 				String netCancel= paramMap.get("netCancelUrl");	
 				String merchantData = paramMap.get("merchantData");
-				System.out.println("1.전문 필드 값 설정");
 				//#####################
 				// 2.signature 생성
 				//#####################
@@ -71,7 +70,6 @@ public class INIstdpayPcReturn {
 
 				// signature 데이터 생성 (모듈에서 자동으로 signParam을 알파벳 순으로 정렬후 NVP 방식으로 나열해 hash)
 				String signature = SignatureUtil.makeSignature(signParam);
-				System.out.println("2.signature 생성");
 
 				//#####################
 				// 3.API 요청 전문 생성
@@ -84,10 +82,8 @@ public class INIstdpayPcReturn {
 				authMap.put("timestamp"		,timestamp);	// 필수
 				authMap.put("charset"		,charset);		// default=UTF-8
 				authMap.put("format"		,format);	    // default=XML
-				System.out.println("3.API 요청 전문 생성");
 
 				HttpUtil httpUtil = new HttpUtil();
-				System.out.println("3.API 요청 전문 생성");
 				
 				try{
 					//#####################
@@ -97,7 +93,6 @@ public class INIstdpayPcReturn {
 					String authResultString = "";
 
 					authResultString = httpUtil.processHTTP(authMap, authUrl);
-					System.out.println("4.API 통신 시작");
 					//############################################################
 					//5.API 통신결과 처리(***가맹점 개발수정***)
 					//############################################################
@@ -122,6 +117,7 @@ public class INIstdpayPcReturn {
 					dto.setTid(resultMap.get("tid"));
 					dto.setTotalPrice(resultMap.get("TotPrice"));
 					orderMapper.paymentInsert(dto);
+					
 				} catch (Exception ex) {
 					//####################################
 					// 실패시 처리(***가맹점 개발수정***)
@@ -140,7 +136,6 @@ public class INIstdpayPcReturn {
 					// 취소 결과 확인
 					System.out.println(netcancelResultString);
 					ex.printStackTrace();
-					System.out.println("오류");
 				}
 
 			}else{

@@ -20,6 +20,7 @@ import nyamnyam.mapper.MenuMapper;
 import nyamnyam.mapper.OrderMapper;
 import nyamnyam.service.AutoNumService;
 import nyamnyam.service.UserNumService;
+import nyamnyam.service.member.OrderHistoryService;
 import nyamnyam.service.order.CartInsertService;
 import nyamnyam.service.order.CartListService;
 import nyamnyam.service.order.IniPayReqService;
@@ -40,6 +41,8 @@ public class OrderController {
 	UserNumService userNumService;
 	@Autowired
 	IniPayReqService iniPayReqService;
+	@Autowired
+	OrderHistoryService orderHistoryService;
 	@Autowired
 	MenuMapper menuMapper;
 	@Autowired
@@ -86,6 +89,13 @@ public class OrderController {
 			e.printStackTrace();
 		}
 		return "thymeleaf/order/orderPayment";
+	}
+	
+	@GetMapping("orderHistory")
+	public String orderHistory(HttpSession session) {
+		String memberNum = userNumService.execute(session);
+		orderHistoryService.execute(memberNum);
+		return "thymeleaf/memberView/orderHistory";
 	}
 	
 }

@@ -18,4 +18,6 @@ public interface OrderMapper {
 	public void orderInfoInsert(OrderInfoDTO dto);
 	public void paymentInsert(PaymentDTO dto);
 	public OrderInfoDTO orderSelectOne(String orderNum);
+	public void orderListInsert(String memberNum);
+	public void orderHistorySelectAll(String memberNum);
 }
