@@ -9,4 +9,8 @@ insert into member (member_num, member_id, member_pw, member_name, member_gender
  values (#{memberNum}, #{memberId}, #{memberPw}, #{memberName}, #{memberGender}, #{memberBirthDate}, sysdate
  , #{memberAddr}, #{memberAddrDetail}, #{memberPost})
 </insert>
+
+<select id="checkZzim" resultType="integer">
+select 1 from zzim where member_num = #{memberNum} and store_num = #{storeNum}
+</select>
 </mapper>

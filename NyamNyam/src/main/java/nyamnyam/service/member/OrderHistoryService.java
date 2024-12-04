@@ -20,6 +20,5 @@ public class OrderHistoryService {
 	public void execute(String memberNum, Model model) {
 		List<OrderInfoDTO> list = orderMapper.orderInfoSelectOne(memberNum);
 		model.addAttribute("list", list);
-		System.out.println(list);
 	}
 }

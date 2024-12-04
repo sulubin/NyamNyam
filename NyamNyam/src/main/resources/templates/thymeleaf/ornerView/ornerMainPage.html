@@ -45,6 +45,18 @@ function menuManage(){
 }
 
 function orderManage(){
+	$.ajax({
+		type : "post",
+		url : "/orner/orderManage",
+		dataType : "html",
+		data : {"ornerNum" : "[[${storeInfoDTO.ornerDTO.ornerNum}]]"},
+		success : function(item){
+			 $("#content").html(item);
+		},
+		error : function(){
+			alert("오류 발생");
+		}
+	});
 }
 function reviewManage(){
 }

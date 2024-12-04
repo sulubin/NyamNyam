@@ -7,7 +7,10 @@
 <body>
 <table align="center" border="1" width="600">
 	<tr><th>주문내역입니다.</th></tr>
-	<tr th:each="dto:${list}"><td>[[${dto.orderNum}]]</td></tr>
+	<tr th:each="dto:${list}"><td>
+		<a href="order/orderDetail?orderNum=${dto.orderNum}">가게명 : [[${dto.storeNum}]]</a>
+		가격 : [[${dto.orderPrice}]]
+	</td></tr>
 
 </table>
 </body>

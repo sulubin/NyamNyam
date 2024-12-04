@@ -105,4 +105,10 @@ public class OrderController {
 		return "thymeleaf/memberView/orderHistory";
 	}
 	
+	@GetMapping("orderDetail")
+	public String orderDetail(String orderNum) {
+		
+		return "thymeleaf/memberView/orderDetail";
+	}
+	
 }

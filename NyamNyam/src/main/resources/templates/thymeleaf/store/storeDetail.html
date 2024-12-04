@@ -9,9 +9,10 @@
 <script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	$("menuInfo").click(function(){
+	$("#menuInfo").click(function(){
 		$(".modal").style(display)
 	});
+	$("#zzim")
 })
 
 function cartAdd(menuNum){
@@ -108,7 +109,12 @@ function cartDel(menuNum){
 <body>
 <!-- Header -->
 <div style="border:1px solid black;width:1200px;height:300px;position:relative;left:300px;">
-
+<th:block th:if="${checkZzim == 1}">
+	<span class="zzim">찜임</span>
+</th:block>
+<th:block th:if="${checkZzim == 0}">
+	<span class="zzim">찜아님</span>
+</th:block>
 </div>
 
 <!-- 메뉴 리스트 -->
