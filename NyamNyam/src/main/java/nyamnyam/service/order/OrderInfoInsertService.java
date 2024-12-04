@@ -26,6 +26,8 @@ public class OrderInfoInsertService {
 		OrderInfoDTO dto = new OrderInfoDTO();
 		String orderNum = autoNumservice.execute("order_info", "order_num", "order_", model);
 		String memberNum = userNumService.execute(session);
+		String storeNum = (String)session.getAttribute("storeNum");
+		System.out.println("세션에서 갖고 오는 storeNum :" + storeNum);
 		dto.setOrderNum(orderNum);
 		dto.setDeliveryAddr(orderInfoCommand.getDeliveryAddr());
 		dto.setDeliveryAddrDetail(orderInfoCommand.getDeliveryAddrDetail());
@@ -34,7 +36,7 @@ public class OrderInfoInsertService {
 		dto.setOrderMessage(orderInfoCommand.getOrderMessage());
 		dto.setOrderPrice(orderInfoCommand.getOrderPrice());
 		dto.setMemberNum(memberNum);
-		
+		dto.setStoreNum(storeNum);
 		orderMapper.orderInfoInsert(dto);
 	}
 }

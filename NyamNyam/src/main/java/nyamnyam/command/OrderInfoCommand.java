@@ -16,4 +16,5 @@ public class OrderInfoCommand {
 	Date orderDate;
 	Integer orderPrice;
 	String memberNum;
+	String storeNum;
 }

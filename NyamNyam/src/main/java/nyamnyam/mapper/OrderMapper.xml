@@ -15,6 +15,7 @@
 			<result column="menu_name" jdbcType="VARCHAR" property="menuName"/>
 			<result column="menu_price" jdbcType="BIGINT" property="menuPrice"/>
 			<result column="menu_store_image" jdbcType="VARCHAR" property="menuStoreImage"/>
+			<result column="store_num" jdbcType="VARCHAR" property="storeNum"/>
 		</association>
 </resultMap>
 
@@ -24,7 +25,7 @@ insert into cart (menu_num, member_num, cart_qty) values (#{menuNum}, #{memberNu
 </insert>
 
 <select id="cartSelectAll" parameterType="string" resultMap="cartListResultMap">
-select c.menu_num, menu_name, menu_price, menu_store_image
+select c.menu_num, menu_name, menu_price, menu_store_image, store_num
 	 , member_num, cart_qty
  from menu m right outer join cart c on m.menu_num = c.menu_num
  where member_num = #{memberNum}
@@ -40,8 +41,8 @@ delete from cart where member_num = #{memberNum}
 
 <!-- 결제 관련 -->
 <insert id="orderInfoInsert" parameterType="orderInfo">
-insert into order_info (order_num, delivery_addr, delivery_addr_detail, delivery_phone, delivery_message, order_message, order_status, order_date, order_price, member_num) 
- values (#{orderNum}, #{deliveryAddr}, #{deliveryAddrDetail}, #{deliveryPhone}, #{deliveryMessage}, #{orderMessage}, '주문대기', sysdate, #{orderPrice}, #{memberNum})
+insert into order_info (order_num, delivery_addr, delivery_addr_detail, delivery_phone, delivery_message, order_message, order_status, order_date, order_price, member_num, store_num) 
+ values (#{orderNum}, #{deliveryAddr}, #{deliveryAddrDetail}, #{deliveryPhone}, #{deliveryMessage}, #{orderMessage}, '주문대기', sysdate, #{orderPrice}, #{memberNum}, #{storeNum})
 </insert>
 
 <insert id="paymentInsert" parameterType="payment">
@@ -50,36 +51,50 @@ values(#{orderNum},#{confirmNum},#{cardNum},#{tid},#{totalPrice},#{resultMessage
 </insert>
 
 <!-- 주문 정보 관련 -->
-<insert id="orderListInsert" parameterType="string">
+<resultMap id="orderInfoResultMap" type="orderInfo">
+	<!-- result column="store_name" jdbcType="VARCHAR" javaType="string" property="storeName"/-->
+	<!-- collection property="menuName" ofType="string">
+		<result column="menu_name" jdbcType="VARCHAR" javaType="string" property="menuName"/>
+	</collection-->
+			<id column="order_num" jdbcType="VARCHAR" property="orderNum"/>
+			<result column="delivery_addr" jdbcType="VARCHAR" property="deliveryAddr"/>
+			<result column="delivery_addr_detail" jdbcType="VARCHAR" property="deliveryAddrDetail"/>
+			<result column="delivery_phone" jdbcType="VARCHAR" property="deliveryPhone"/>
+			<result column="delivery_message" jdbcType="VARCHAR" property="deliveryMessage"/>
+			<result column="order_message" jdbcType="VARCHAR" property="orderMessage"/>
+			<result column="order_status" jdbcType="VARCHAR" property="orderStatus"/>
+			<result column="order_date" jdbcType="DATE" property="orderMessage"/>
+			<result column="order_price" jdbcType="BIGINT" property="orderPrice"/>
+			<result column="member_num" jdbcType="VARCHAR" property="memberNum"/>
+			<result column="store_num" jdbcType="VARCHAR" property="storeNum"/>	
+</resultMap>
+
+<insert id="orderListInsert" parameterType="cartList">
 insert into order_list (order_num, menu_num, menu_option)
- values ((),(),())
- select max(substr(order_num, 7)), menu_num, menu_option
- from cart c join order_info oi on c.member_num = oi.member_num
- where c.member_num = #{memberNum}
-</insert>
-
-<insert id="purchaseListInsert" parameterType="hashmap">
-insert into purchase_list(GOODS_NUM, PURCHASE_NUM, PURCHASE_QTY, GOODS_UNIT_PRICE)
-
-select c.GOODS_NUM, #{purchaseNum}, CART_QTY , CART_QTY * goods_price
-from cart c join goods g
-on c.goods_num = g.goods_num 
-where member_num = #{memberNum}  
-and c.goods_num in 
-<foreach collection="goodsNums" item="goodsNum" close=")" open="("
-		index="index" separator=",">
-	#{goodsNum}
-</foreach>
+ values (#{orderNum}, #{menuNum}, null)
 </insert>
 
 <select id="orderSelectOne" parameterType="string">
 select order_num, delivery_addr, delivery_addr_detail, delivery_phone, delivery_message, order_message, order_status, order_date, order_price, member_num
- from order_info where order_num = #{orderNum}
+ from order_info where order_num = #{orderNum} 
 </select>
 
-<select id="orderHistorySelectAll" parameterType="string">
-select order_num from order_info
+<select id="orderInfoSelectOne" parameterType="string" resultMap="orderInfoResultMap">
+select order_num, delivery_addr, delivery_addr_detail, delivery_phone, delivery_message, order_message, order_status, order_date
+	 , order_price, member_num, store_num
+ from order_info 
+ where member_num = #{memberNum}
 </select>
 
+<!-- select id="orderHistorySelectAll" parameterType="string" resultMap="orderHistoryResultMap">
+select oi.order_num, ol.menu_num, menu_option
+	 , delivery_addr, delivery_addr_detail, delivery_phone, delivery_message, order_message, order_status, order_date, order_price, member_num, oi.store_num
+	 <  , s.store_name
+	 , menu_name >
+ from order_list ol join order_info oi on ol.order_num = oi.order_num
+ 					< join store s on oi.store_num = s.store_num
+ 					join menu m on ol.menu_num = m.menu_num>
+ where oi.member_num = #{memberNum}
+</select -->
 
 </mapper>

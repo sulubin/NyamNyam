@@ -5,8 +5,10 @@
 <title>주문 내역</title>
 </head>
 <body>
-<table align="center">
-	<tr><td></td></tr>
+<table align="center" border="1" width="600">
+	<tr><th>주문내역입니다.</th></tr>
+	<tr th:each="dto:${list}"><td>[[${dto.orderNum}]]</td></tr>
+
 </table>
 </body>
 </html>

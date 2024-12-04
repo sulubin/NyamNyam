@@ -25,7 +25,6 @@ public class PaymentController {
 	public String payReturn(HttpServletRequest request, HttpSession session) {
 		iniPayReturnService.execute(request);
 		String memberNum = userNumService.execute(session);
-		orderMapper.orderListInsert(memberNum);
 		orderMapper.cartDelete(null, memberNum);
 		return "thymeleaf/order/buyfinished";
 	}

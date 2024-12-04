@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import nyamnyam.command.StoreCommand;
-import nyamnyam.domain.CartListDTO;
 import nyamnyam.domain.LoginDTO;
 import nyamnyam.domain.MenuDTO;
+import nyamnyam.domain.StoreDTO;
 import nyamnyam.domain.StoreInfoDTO;
 import nyamnyam.mapper.MenuMapper;
 import nyamnyam.mapper.OrderMapper;
@@ -73,8 +73,10 @@ public class StoreController {
 		// 카트 정보 가져오기
 		LoginDTO auth = (LoginDTO)session.getAttribute("auth");
 		if(auth == null) {
+			session.setAttribute("storeNum", storeNum);
 			return "thymeleaf/store/storeDetail";
 		}else {
+			session.setAttribute("storeNum", storeNum);
 			cartListService.execute(session, model);
 			return "thymeleaf/store/storeDetail";
 		}

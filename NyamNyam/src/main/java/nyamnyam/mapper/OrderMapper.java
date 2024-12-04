@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import nyamnyam.domain.CartDTO;
 import nyamnyam.domain.CartListDTO;
+import nyamnyam.domain.OrderHistoryDTO;
 import nyamnyam.domain.OrderInfoDTO;
 import nyamnyam.domain.PaymentDTO;
 
@@ -18,6 +19,6 @@ public interface OrderMapper {
 	public void orderInfoInsert(OrderInfoDTO dto);
 	public void paymentInsert(PaymentDTO dto);
 	public OrderInfoDTO orderSelectOne(String orderNum);
-	public void orderListInsert(String memberNum);
-	public void orderHistorySelectAll(String memberNum);
+	public void orderListInsert(@Param("orderNum") String orderNum, @Param("menuNum") String menuNum);
+	public List<OrderInfoDTO> orderInfoSelectOne(String memberNum);
 }

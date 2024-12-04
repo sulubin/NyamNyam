@@ -1,6 +1,7 @@
 package nyamnyam.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
@@ -19,4 +20,6 @@ public class OrderInfoDTO {
 	Date orderDate;
 	Integer orderPrice;
 	String memberNum;
+	String storeNum;
+	//List<OrderListDTO> orderListDTO;
 }

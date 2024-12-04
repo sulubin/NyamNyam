@@ -5,19 +5,22 @@
 <title>Insert title here</title>
 </head>
 <body>
+<form action="/order/menuOrder" method="post">
 <div style="border:1px solid black; width:1400px; height:1800px; position:relative;left:270px;">
 	<!-- 주문 내용 -->
 	<div style="border:1px solid black; width:950px; position:relative; left:32px;">
 		<table border="1" width="950px">
 			<tr><th colspan="3">주문 내용</th></tr>
 			<tr th:each="cartListDTO:${list}">
+				
 				<td width="100" height="100"><img th:src="|/static/upload/${cartListDTO.menuDTO.menuStoreImage}|" width="100" height="100"/></td>
 											<td>[[${cartListDTO.menuDTO.menuName}]]<br/>
 								[[${cartListDTO.menuDTO.menuPrice}]]</td>
 			</tr>
 		</table>
 	</div>
-	<form action="/order/menuOrder" method="post">
+	
+	
 	<input type="hidden" name="orderPrice" th:value="${totPrice}"/>
 	<!-- 배달 정보 -->
 	<div style="border:1px solid black; width:950px; height:400px; position:static; margin:30px;">
@@ -52,7 +55,8 @@
 			<tr><th><button type="submit">결제하기</button></th></tr>
 		</table>
 	</div>
-	</form>
+	
 </div>
+</form>
 </body>
 </html>

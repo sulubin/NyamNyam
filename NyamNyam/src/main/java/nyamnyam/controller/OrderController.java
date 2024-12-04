@@ -80,9 +80,16 @@ public class OrderController {
 	}
 	
 	@PostMapping("menuOrder")
-	public String menuOrder(OrderInfoCommand orderInfoCommad, HttpSession session, Model model) {
+	public String menuOrder(OrderInfoCommand orderInfoCommand, HttpSession session, Model model) {
 		String orderNum = autoNumService.execute("order_info", "order_num", "order_", model);
-		orderInfoInsertService.execute(orderInfoCommad, session, model);
+		orderInfoInsertService.execute(orderInfoCommand, session, model);
+		String memberNum = userNumService.execute(session);
+		List<CartListDTO> cartList = orderMapper.cartSelectAll(memberNum);
+		for(CartListDTO dto : cartList) {
+			String menuNum = dto.getCartDTO().getMenuNum();
+			orderMapper.orderListInsert(orderNum, menuNum);
+		}
+
 		try {
 			iniPayReqService.execute(orderNum, model);
 		} catch (Exception e) {
@@ -92,9 +99,9 @@ public class OrderController {
 	}
 	
 	@GetMapping("orderHistory")
-	public String orderHistory(HttpSession session) {
+	public String orderHistory(HttpSession session, Model model) {
 		String memberNum = userNumService.execute(session);
-		orderHistoryService.execute(memberNum);
+		orderHistoryService.execute(memberNum, model);
 		return "thymeleaf/memberView/orderHistory";
 	}
 	

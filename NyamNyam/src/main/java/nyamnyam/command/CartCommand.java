@@ -6,5 +6,6 @@ import lombok.Data;
 public class CartCommand {
 	String menuNum;
 	String memberNum;
+	String menuOption;
 	Integer cartQty;
 }

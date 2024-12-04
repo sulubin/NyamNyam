@@ -9,5 +9,6 @@ import lombok.Data;
 public class CartDTO {
 	String menuNum;
 	String memberNum;
+	String menuOption;
 	Integer cartQty;
 }
