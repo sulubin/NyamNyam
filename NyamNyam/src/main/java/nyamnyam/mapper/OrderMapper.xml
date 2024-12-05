@@ -7,8 +7,8 @@
 <resultMap type="cartList" id="cartListResultMap">
 		<association property="cartDTO" javaType = "cart">
 			<id column="menu_num" jdbcType="VARCHAR" property="menuNum"></id>
-			<result column="member_num" jdbcType="VARCHAR" property="memberNum"></result>
-			<result column="cart_qty" jdbcType="BIGINT" property="cartQty"></result>
+			<result column="member_num" jdbcType="VARCHAR" property="memberNum"/>
+			<result column="cart_qty" jdbcType="BIGINT" property="cartQty"/>
 		</association>
 		<association property="menuDTO" javaType = "menu">
 			<id column="menu_num" jdbcType="VARCHAR" property="menuNum"/>
@@ -52,31 +52,46 @@ values(#{orderNum},#{confirmNum},#{cardNum},#{tid},#{totalPrice},#{resultMessage
 
 <!-- 주문 정보 관련 -->
 <resultMap id="orderInfoResultMap" type="orderInfo">
-	<!-- result column="store_name" jdbcType="VARCHAR" javaType="string" property="storeName"/-->
-	<!-- collection property="menuName" ofType="string">
-		<result column="menu_name" jdbcType="VARCHAR" javaType="string" property="menuName"/>
-	</collection-->
-			<id column="order_num" jdbcType="VARCHAR" property="orderNum"/>
-			<result column="delivery_addr" jdbcType="VARCHAR" property="deliveryAddr"/>
-			<result column="delivery_addr_detail" jdbcType="VARCHAR" property="deliveryAddrDetail"/>
-			<result column="delivery_phone" jdbcType="VARCHAR" property="deliveryPhone"/>
-			<result column="delivery_message" jdbcType="VARCHAR" property="deliveryMessage"/>
-			<result column="order_message" jdbcType="VARCHAR" property="orderMessage"/>
-			<result column="order_status" jdbcType="VARCHAR" property="orderStatus"/>
-			<result column="order_date" jdbcType="DATE" property="orderMessage"/>
-			<result column="order_price" jdbcType="BIGINT" property="orderPrice"/>
-			<result column="member_num" jdbcType="VARCHAR" property="memberNum"/>
-			<result column="store_num" jdbcType="VARCHAR" property="storeNum"/>	
+	<id column="order_num" jdbcType="VARCHAR" property="orderNum"/>
+	<result column="delivery_addr" jdbcType="VARCHAR" property="deliveryAddr"/>
+	<result column="delivery_phone" jdbcType="VARCHAR" property="deliveryPhone"/>
+	<result column="delivery_message" jdbcType="VARCHAR" property="deliveryMessage"/>
+	<result column="order_message" jdbcType="VARCHAR" property="orderMessage"/>
+	<result column="order_status" jdbcType="VARCHAR" property="orderStatus"/>
+	<result column="order_date" jdbcType="DATE" property="orderMessage"/>
+	<result column="order_price" jdbcType="BIGINT" property="orderPrice"/>
+	<result column="member_num" jdbcType="VARCHAR" property="memberNum"/>
+	<result column="store_num" jdbcType="VARCHAR" property="storeNum"/>	
 </resultMap>
-
+<resultMap id="orderHistoryResultMap" type="orderHistory">
+	<association property="rowspanDTO" javaType="rowspan">
+		<result column="ROWSPAN" jdbcType="BIGINT" property="rowspan"/>
+	</association>
+	<association property="orderInfoDTO" javaType="orderInfo">
+		<id column="order_num" jdbcType="VARCHAR" property="orderNum"/>
+		<result column="delivery_addr" jdbcType="VARCHAR" property="deliveryAddr"/>
+		<result column="delivery_phone" jdbcType="VARCHAR" property="deliveryPhone"/>
+		<result column="delivery_message" jdbcType="VARCHAR" property="deliveryMessage"/>
+		<result column="order_message" jdbcType="VARCHAR" property="orderMessage"/>
+		<result column="order_status" jdbcType="VARCHAR" property="orderStatus"/>
+		<result column="order_date" jdbcType="DATE" property="orderMessage"/>
+		<result column="order_price" jdbcType="BIGINT" property="orderPrice"/>
+		<result column="member_num" jdbcType="VARCHAR" property="memberNum"/>
+		<result column="store_num" jdbcType="VARCHAR" property="storeNum"/>	
+	</association>
+	<association property="orderListDTO" javaType="orderList">
+		<id column="order_num" jdbcType="VARCHAR" property="orderNum"/>
+		<result column="menu_num" jdbcType="VARCHAR" property="menuNum"/>
+		<result column="menu_option" jdbcType="VARCHAR" property="menuOption"/>
+	</association>
+</resultMap>
 <insert id="orderListInsert" parameterType="cartList">
 insert into order_list (order_num, menu_num, menu_option)
  values (#{orderNum}, #{menuNum}, null)
 </insert>
 
-<select id="orderSelectOne" parameterType="string">
-select order_num, delivery_addr, delivery_addr_detail, delivery_phone, delivery_message, order_message, order_status, order_date, order_price, member_num
- from order_info where order_num = #{orderNum} 
+<select id="orderListSelectOne" parameterType="string" resultType="orderList">
+select order_num, menu_num, menu_option from order_list where order_num = #{orderNum}
 </select>
 
 <select id="orderInfoSelectOne" parameterType="string" resultMap="orderInfoResultMap">
@@ -86,15 +101,23 @@ select order_num, delivery_addr, delivery_addr_detail, delivery_phone, delivery_
  where member_num = #{memberNum}
 </select>
 
-<!-- select id="orderHistorySelectAll" parameterType="string" resultMap="orderHistoryResultMap">
-select oi.order_num, ol.menu_num, menu_option
+<select id="orderInfoSelectAll" parameterType="string" resultType="orderInfo">
+select order_num, delivery_addr, delivery_addr_detail, delivery_phone, delivery_message, order_message, order_status, order_date
+	 , order_price, member_num, store_num
+ from order_info
+ where store_num = #{storeNum}
+</select> 
+
+<select id="orderHistorySelectAll" parameterType="string" resultMap="orderHistoryResultMap">
+select COUNT(*) OVER(PARTITION BY oi.order_num ORDER BY oi.order_num ) AS ROWSPAN
+	 ,oi.order_num as order_num, ol.menu_num as order_num, menu_option
 	 , delivery_addr, delivery_addr_detail, delivery_phone, delivery_message, order_message, order_status, order_date, order_price, member_num, oi.store_num
-	 <  , s.store_name
-	 , menu_name >
+     , s.store_name
+	 , menu_name 
  from order_list ol join order_info oi on ol.order_num = oi.order_num
- 					< join store s on oi.store_num = s.store_num
- 					join menu m on ol.menu_num = m.menu_num>
+ 				    join store s on oi.store_num = s.store_num
+ 					join menu m on ol.menu_num = m.menu_num
  where oi.member_num = #{memberNum}
-</select -->
+</select>
 
 </mapper>

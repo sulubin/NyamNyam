@@ -3,8 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script type="text/javascript">
+function orderReceipt(orderNum){
+	$.ajax({
+		type: "post",
+		url: "/orner/orderReceipt",
+		data: {"orderNum":orderNum},
+		dataType: "html",
+		success: function(item){
+			$("#orderContent").html(item);
+		},
+		error: function(){
+			alert("서버 오류");
+		}
+	});
+}
+</script>
 </head>
 <body>
+<div style="border:1px solid black; width:1000px;position:relative;left:200px" align="center">
 주문 관리 페이지입니다.
+<table border="1" width="800">
+	<tr><th>주문 목록</th></tr>
+	<tr th:each="dto :${orderInfoDTO}"><td>
+		<div th:attr="onclick='orderReceipt(${dto.orderNum})'">
+		주문번호: [[${dto.orderNum}]]<br/>
+		주소: [[${dto.deliveryAddr}]]
+		</div>
+	</td></tr>
+</table>
+</div>
+<div style="border:1px solid black; position:relative; width:400px;left:1400px; top:-100px; height:600px">
+	<div id="orderContent"></div>
+</div>
 </body>
 </html>

@@ -16,6 +16,8 @@ import nyamnyam.command.OrderInfoCommand;
 import nyamnyam.domain.CartListDTO;
 import nyamnyam.domain.LoginDTO;
 import nyamnyam.domain.MenuDTO;
+import nyamnyam.domain.OrderInfoDTO;
+import nyamnyam.domain.OrderListDTO;
 import nyamnyam.mapper.MenuMapper;
 import nyamnyam.mapper.OrderMapper;
 import nyamnyam.service.AutoNumService;
@@ -106,9 +108,13 @@ public class OrderController {
 	}
 	
 	@GetMapping("orderDetail")
-	public String orderDetail(String orderNum) {
-		
+	public String orderDetail(String orderNum, Model model) {
+		OrderInfoDTO orderInfoDTO = orderMapper.orderSelectOne(orderNum);
+		//List<OrderListDTO> orderListDTO = orderMapper.orderListSelecAll(orderNum);
+		//model.addAttribute("orderListDTO", orderListDTO);
+		model.addAttribute("orderInfoDTO", orderInfoDTO);
 		return "thymeleaf/memberView/orderDetail";
 	}
+	
 	
 }

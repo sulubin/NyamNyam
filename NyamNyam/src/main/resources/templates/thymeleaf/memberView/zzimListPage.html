@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<table width="600" align="center" border="1">
+	<tr><th>찜 리스트</th></tr>
+	<tr th:each="storeName : ${zzimList}"><td>가게명 : [[${storeName}]]</td></tr>
+</table>
+</body>
+</html>

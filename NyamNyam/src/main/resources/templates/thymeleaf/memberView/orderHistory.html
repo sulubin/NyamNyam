@@ -5,13 +5,22 @@
 <title>주문 내역</title>
 </head>
 <body>
-<table align="center" border="1" width="600">
-	<tr><th>주문내역입니다.</th></tr>
-	<tr th:each="dto:${list}"><td>
-		<a href="order/orderDetail?orderNum=${dto.orderNum}">가게명 : [[${dto.storeNum}]]</a>
-		가격 : [[${dto.orderPrice}]]
-	</td></tr>
-
-</table>
+<th:block th:with="prevNum=null">
+    <table align="center" border="1" width="600">
+        <tr><th colspan=2>주문내역입니다.</th></tr>
+        <tr th:each="dto : ${orderHistoryDTO}">
+            <th:block th:with="isNew=${prevNum != dto.orderInfoDTO.orderNum} , prevNum=${dto.orderInfoDTO.orderNum}">
+                <!-- 새로운 주문 번호일 때만 출력 -->
+                <td th:if="${isNew}" >
+                    주문 번호 : [[${dto.orderInfoDTO.orderNum}]]
+                </td>
+                <td>
+                    <a th:href="|/order/orderDetail?orderNum=${dto.orderInfoDTO.orderNum}|">가게명 : [[${dto.orderInfoDTO.storeNum}]]</a><br/>
+                    메뉴명 : [[${dto.orderListDTO.menuNum}]]
+                </td>
+            </th:block>
+        </tr>
+    </table>
+</th:block>
 </body>
 </html>

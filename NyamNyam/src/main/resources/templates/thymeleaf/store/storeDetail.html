@@ -12,7 +12,25 @@ $(function(){
 	$("#menuInfo").click(function(){
 		$(".modal").style(display)
 	});
-	$("#zzim")
+	
+	$("#zzim").click(function(){
+		$.ajax({
+			type: "post",
+			url: "/member/zzimCheck",
+			data: {"storeNum": "[[${storeInfoDTO.storeDTO.storeNum}]]"},
+			success: function(){
+				alert("서버 오류");
+			},
+			error: function(){
+				if($("#zzim").attr("src") == "/static/upload/hart.jpg"){
+					$("#zzim").attr("src","/static/upload/hart1.jpg");
+				}
+				else{
+					$("#zzim").attr("src","/static/upload/hart.jpg");
+				}
+			}
+		});
+	});
 })
 
 function cartAdd(menuNum){
@@ -110,10 +128,10 @@ function cartDel(menuNum){
 <!-- Header -->
 <div style="border:1px solid black;width:1200px;height:300px;position:relative;left:300px;">
 <th:block th:if="${checkZzim == 1}">
-	<span class="zzim">찜임</span>
+	<img src="/static/upload/hart.jpg" id="zzim" width="100" height="100"/>
 </th:block>
 <th:block th:if="${checkZzim == 0}">
-	<span class="zzim">찜아님</span>
+	<img src="/static/upload/hart1.jpg" id="zzim" width="100" height="100"/>
 </th:block>
 </div>
 

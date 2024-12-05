@@ -1,5 +1,7 @@
 package nyamnyam.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +14,10 @@ import jakarta.servlet.http.HttpSession;
 import nyamnyam.command.OrnerCommand;
 import nyamnyam.command.StoreCommand;
 import nyamnyam.domain.LoginDTO;
+import nyamnyam.domain.OrderInfoDTO;
+import nyamnyam.domain.OrderListDTO;
 import nyamnyam.domain.StoreInfoDTO;
+import nyamnyam.mapper.OrderMapper;
 import nyamnyam.mapper.StoreMapper;
 import nyamnyam.service.menu.MenuRegistService;
 import nyamnyam.service.orner.OrnerRegistService;
@@ -25,6 +30,8 @@ public class OrnerController {
 	MenuRegistService menuRegistService;
 	@Autowired
 	StoreMapper storeMapper;
+	@Autowired
+	OrderMapper orderMapper;
 	@Autowired
 	OrnerRegistService ornerRegistService;
 	@Autowired
@@ -51,7 +58,22 @@ public class OrnerController {
 	}
 	
 	@PostMapping("orderManage")
-	public String orderManage(@RequestParam("ornerNum") String ornerNum) {
+	public String orderManage(@RequestParam("ornerNum") String ornerNum, Model model) {
+		String storeNum = storeMapper.selectStoreNum(ornerNum);
+		List<OrderInfoDTO> orderInfoDTO = orderMapper.orderInfoSelectAll(storeNum);
+		model.addAttribute("orderInfoDTO", orderInfoDTO);
 		return "thymeleaf/OrnerView/orderManagePage";
+	}
+	
+	@PostMapping("orderReceipt")
+	public String orderReceipt(@RequestParam("orderNum") String orderNum, Model model) {
+		System.out.println("orderNum : " + orderNum);
+		OrderInfoDTO orderInfoDTO = orderMapper.orderInfoSelectOne(orderNum);
+		OrderListDTO orderListDTO = orderMapper.orderListSelectOne(orderNum);
+		System.out.println("orderInfo : " + orderInfoDTO);
+		System.out.println("orderList : " + orderListDTO);
+		model.addAttribute("orderInfoDTO", orderInfoDTO);
+		model.addAttribute("orderListDTO", orderListDTO);
+		return "thymeleaf/OrnerView/orderReceipt";
 	}
 }

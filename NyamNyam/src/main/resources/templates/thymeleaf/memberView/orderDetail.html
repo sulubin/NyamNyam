@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div align="center">
+주문 상세 페이지
+<!-- 주문 메뉴 -->
+<table border="1" width="600">
+	<tr></tr>
+</table>
+<!-- 요청 사항 -->
+<table border="1" width="600">
+	<tr><th>요청 사항</th></tr>
+	<tr>
+		<td><textarea rows="4" cols="130">[[${orderInfoDTO.orderMessage}]]</textarea></td>
+	</tr>
+</table>
+<!-- 배달 정보 -->
+<table border="1" width="600">
+	<tr><th>배달 정보</th></tr>
+	<tr>
+		<td>주소</td><td>[[${orderInfoDTO.deliveryAddr}]]</td>
+		<td>상세 주소</td><td>[[${orderInfoDTO.deliveryAddrDetail}]]</td>
+		<td>받는 사람 번호</td><td>[[${orderInfoDTO.deliveryPhone}]]</td>
+		<td>배달 요청 사항</td><td>[[${orderInfoDTO.deliveryMessage}]]</td>
+	</tr>
+</table>
+<!-- 결제 내역 -->
+</div>
+</body>
+</html>

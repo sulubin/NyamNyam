@@ -10,7 +10,26 @@ insert into member (member_num, member_id, member_pw, member_name, member_gender
  , #{memberAddr}, #{memberAddrDetail}, #{memberPost})
 </insert>
 
-<select id="checkZzim" resultType="integer">
-select 1 from zzim where member_num = #{memberNum} and store_num = #{storeNum}
+<select id="checkZzim" resultType="int">
+ select count(*) from zzim where member_num = #{memberNum} and store_num = #{storeNum}
 </select>
+
+<select id="zzimSelectAll" parameterType="string" resultType="string">
+select store_name from zzim z join store s on z.store_num = s.store_num
+ where member_num = #{memberNum}
+</select>
+
+<update id="zzimUpdate" parameterType="zzim">
+merge into zzim z 
+	using (select store_num from store where store_num = #{storeNum}) s
+	on (z.store_num = s.store_num and member_num = #{memberNum})
+	when matched then
+		update set zzim_date = sysdate
+		delete where member_num = #{memberNum} and s.store_num = #{storeNum}
+	when not matched then
+		insert (member_num, store_num, zzim_date)
+		values (#{memberNum}, s.store_num, sysdate)
+</update>
+
+
 </mapper>

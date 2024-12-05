@@ -67,7 +67,6 @@ public class StoreController {
 	}
 	@GetMapping("storeDetail")
 	public String storeDetail(@RequestParam("storeNum") String storeNum, HttpSession session, Model model) {
-		System.out.println("storeDetail 컨트롤러까지 옴");
 		StoreInfoDTO storeInfoDTO = storeMapper.selectStoreInfoList(storeNum);
 		model.addAttribute("storeInfoDTO", storeInfoDTO);
 		// 메뉴 정보 가져오기
@@ -75,13 +74,10 @@ public class StoreController {
 		model.addAttribute("menuList", menuList);	
 		// 카트 정보 가져오기
 		LoginDTO auth = (LoginDTO)session.getAttribute("auth");
-		System.out.println("if문 직전까지 옴");
 		if(auth == null) {
-			System.out.println("if문으로 옴");
 			session.setAttribute("storeNum", storeNum);
 			return "thymeleaf/store/storeDetail";
 		}else {
-			System.out.println("else문으로 옴");
 			String memberNum = auth.getUserNum();
 			zzimCheckService.execute(storeNum, memberNum, model);
 			session.setAttribute("storeNum", storeNum);
