@@ -20,9 +20,9 @@ public class CartListService {
 		List<CartListDTO> cartList = orderMapper.cartSelectAll(auth.getUserNum());
 		model.addAttribute("cartList", cartList);
 		Integer totPrice = 0;
-		for(CartListDTO dto : cartList) {
-			totPrice += dto.getCartDTO().getCartQty() * dto.getMenuDTO().getMenuPrice();
-		}
+		//for(CartListDTO dto : cartList) {
+		//	totPrice += dto.getCartDTO().getCartQty() * dto.getMenuDTO().getMenuPrice();
+		//}
 		model.addAttribute("totPrice", totPrice);
 		return totPrice;
 	}

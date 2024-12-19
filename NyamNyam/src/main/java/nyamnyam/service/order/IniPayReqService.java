@@ -18,7 +18,7 @@ public class IniPayReqService {
 	@Autowired
 	OrderMapper orderMapper;
 	public void execute(String orderNum,Model model) throws Exception{
-		OrderInfoDTO dto =  orderMapper.orderSelectOne(orderNum);
+		OrderInfoDTO dto =  orderMapper.orderInfoSelectOne(orderNum);
 		String mid					= "INIpayTest";		                    // 상점아이디					
 		String signKey			    = "SU5JTElURV9UUklQTEVERVNfS0VZU1RS";	// 웹 결제 signkey
 		

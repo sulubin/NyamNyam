@@ -109,7 +109,7 @@ public class OrderController {
 	
 	@GetMapping("orderDetail")
 	public String orderDetail(String orderNum, Model model) {
-		OrderInfoDTO orderInfoDTO = orderMapper.orderSelectOne(orderNum);
+		OrderInfoDTO orderInfoDTO = orderMapper.orderInfoSelectOne(orderNum);
 		//List<OrderListDTO> orderListDTO = orderMapper.orderListSelecAll(orderNum);
 		//model.addAttribute("orderListDTO", orderListDTO);
 		model.addAttribute("orderInfoDTO", orderInfoDTO);
